@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:one_wallet/models/card_model.dart';
-import 'package:one_wallet/provider/wallet_provider.dart';
 import 'package:one_wallet/widgets/dummy_card_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:drift/drift.dart' as dr;
@@ -24,7 +22,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
   final cardNumberController = TextEditingController();
   final expiryDateController = TextEditingController();
   final cardHolderNameController = TextEditingController();
-  final cvvController = TextEditingController();
+  final cvvController = TextEditingController();  
 
   //this variables are used to store the values of the form fields
   String bankName = '';

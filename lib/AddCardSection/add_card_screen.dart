@@ -197,9 +197,10 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     if (text.length != 3) {
                       return 'Please enter valid cvv code';
                     }
-                    return null;
+                    return null;   
                   },
-                  maxLength: 3,  
+                  maxLength: 30  ,  
+                  
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'CVV',
@@ -214,8 +215,8 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 ),
                 const SizedBox(
                   height: 16,                                                                                                
-                ),   
-                TextFormField(        
+                ),      
+                TextFormField(           
                   keyboardType: TextInputType.text,
                   controller: expiryDateController,
                   autovalidateMode: _submitted

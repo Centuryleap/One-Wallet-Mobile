@@ -6,9 +6,16 @@ import 'package:one_wallet/OnboardingProcess/splash_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:one_wallet/database/database.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // transparent status bar
+    ),
+  );
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -31,18 +38,24 @@ class MyApp extends StatelessWidget {
       create: (_) => AppDatabase(),
       //this widget was created to be able to click anywhere on the screen of the app to remove keyboard
       child: DismissKeyboard(
-        child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              fontFamily: 'Gotham',
-            ),
-            home: SplashScreen()),
+        child: ScreenUtilInit(
+            designSize: const Size(390, 844),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (child) {
+              return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'Flutter Demo',
+                  theme: ThemeData(
+                    fontFamily: 'Gotham',
+                  ),
+                  home: SplashScreen());
+            }),
       ),
     );
   }
 }
-                          
+
 class DismissKeyboard extends StatelessWidget {
   final Widget child;
   const DismissKeyboard({Key? key, required this.child}) : super(key: key);

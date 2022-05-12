@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NoCardWidget extends StatelessWidget {
@@ -17,17 +18,20 @@ class NoCardWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(height: 49.h),
             SvgPicture.asset(
               'assets/no_card_available_illustration.svg',
+              width: 268.w,
+              height: 210.h,
             ),
-            const SizedBox(height: 30),
-            const Text(
+             SizedBox(height: 30.h),
+             Text(
               'You have no card in your wallet',
               style: TextStyle(
                 fontFamily: 'SF-Pro',
-                fontSize: 16,
+                fontSize: 16.h,
                 fontWeight: FontWeight.w400,
-                color: Color(0xff505780),
+                color:const Color(0xff505780),
               ),
             ),
           ],

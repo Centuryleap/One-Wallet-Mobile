@@ -1,8 +1,7 @@
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:one_wallet/OnboardingProcess/log_in_screen.dart';
 
@@ -20,7 +19,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 //this controllers are used to get the values from the appropriate text fields
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   //this boolean is used to check if the user has clicked on the sign up button and know wether to show CircularProgressIndicator or not
   bool loading = false;
@@ -30,7 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 86, left: 24, right: 24),
+          padding: EdgeInsets.only(top: 86.h, left: 24.w, right: 24.w),
           child: Form(
             key: _formKey,
             child: Container(
@@ -38,36 +38,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 children: [
                   SvgPicture.asset(
-                    'assets/one_wallet_logo.svg',                         
-                    width: 56,
-                    height: 56,
+                    'assets/one_wallet_logo.svg',
+                    width: 56.w,
+                    height: 56.h,
                   ),
-                  const SizedBox(
-                    height: 40,
+                  SizedBox(
+                    height: 40.h,
                   ),
-                  const Text(
+                  Text(
                     'Create account',
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontFamily: 'SF-Pro',
-                        fontSize: 24,
+                        fontSize: 24.sp,
                         color: Colors.black),
                   ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  const Text(
+                  SizedBox(height: 6.h),
+                  Text(
                     'Sign up with the provided \nmeans to continue',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       height: 1.6,
                       fontFamily: 'SF-Pro',
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xff505780),
+                      color: const Color(0xff505780),
                     ),
                   ),
-                  const SizedBox(
-                    height: 56,
+                  SizedBox(
+                    height: 56.h,
                   ),
                   TextFormField(
                     controller: _emailController,
@@ -84,20 +83,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         labelText: 'Email Address',
-                        labelStyle:
-                            const TextStyle(
-                            color: Color(0xffAAA8BD),
-                            fontSize: 14,
+                        labelStyle: TextStyle(
+                            color: const Color(0xffAAA8BD),
+                            fontSize: 14.sp,
                             fontFamily: 'SF-Pro',
                             fontWeight: FontWeight.w400),
-                        floatingLabelStyle: const TextStyle(color: Color(0xff02003D)),
+                        floatingLabelStyle:
+                            const TextStyle(color: Color(0xff02003D)),
                         fillColor: const Color(0xffFAFBFF),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(16))),
+                            borderRadius: BorderRadius.circular(16.r))),
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: 20.h,
                   ),
                   TextFormField(
                     controller: _passwordController,
@@ -112,20 +111,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         labelText: 'Enter Password',
-                        labelStyle:
-                            const TextStyle(
-                            color: Color(0xffAAA8BD),
-                            fontSize: 14,
+                        labelStyle: TextStyle(
+                            color: const Color(0xffAAA8BD),
+                            fontSize: 14.sp,
                             fontFamily: 'SF-Pro',
                             fontWeight: FontWeight.w400),
-                        floatingLabelStyle: const TextStyle(color: Color(0xff02003D)),
+                        floatingLabelStyle:
+                            const TextStyle(color: Color(0xff02003D)),
                         fillColor: const Color(0xffFAFBFF),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(16))),
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: 20.h,
                   ),
                   TextFormField(
                     controller: _confirmPasswordController,
@@ -143,24 +142,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         labelText: 'Confirm Password',
-                        labelStyle: const TextStyle(
-                            color: Color(0xffAAA8BD),
-                            fontSize: 14,
+                        labelStyle: TextStyle(
+                            color: const Color(0xffAAA8BD),
+                            fontSize: 14.sp,
                             fontFamily: 'SF-Pro',
                             fontWeight: FontWeight.w400),
-                        floatingLabelStyle: const TextStyle(color: Color(0xff02003D)),
+                        floatingLabelStyle:
+                            const TextStyle(color: Color(0xff02003D)),
                         fillColor: const Color(0xffFAFBFF),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(16))),
                   ),
-                  const SizedBox(
-                    height: 40,
+                  SizedBox(
+                    height: 40.h,
                   ),
                   MaterialButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-
                         try {
                           //when this button is pressed the loading variable is set to true and the CircularProgressIndicator is shown
                           setState(() {
@@ -180,77 +179,71 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           setState(() {
                             loading = false;
                           });
-                          if(e.code == 'weak-password'){
-                            ScaffoldMessenger.of(_formKey.currentState!.context).showSnackBar(const SnackBar(
+                          if (e.code == 'weak-password') {
+                            ScaffoldMessenger.of(_formKey.currentState!.context)
+                                .showSnackBar(const SnackBar(
                               content: Text('Password is too weak'),
                             ));
-                          }
-                          else if(e.code == 'email-already-in-use'){
-                            ScaffoldMessenger.of(_formKey.currentState!.context).showSnackBar(const SnackBar(
+                          } else if (e.code == 'email-already-in-use') {
+                            ScaffoldMessenger.of(_formKey.currentState!.context)
+                                .showSnackBar(const SnackBar(
                               content: Text('Email already in use'),
                             ));
-                          }
-                          else if(e.code == 'network-request-failed'){
-                              ScaffoldMessenger.of(_formKey.currentState!.context).showSnackBar(const SnackBar(
+                          } else if (e.code == 'network-request-failed') {
+                            ScaffoldMessenger.of(_formKey.currentState!.context)
+                                .showSnackBar(const SnackBar(
                               content: Text('There was a network error'),
                             ));
-                          }
-                          else{ 
-                            ScaffoldMessenger.of(_formKey.currentState!.context).showSnackBar(const SnackBar(
+                          } else {
+                            ScaffoldMessenger.of(_formKey.currentState!.context)
+                                .showSnackBar(const SnackBar(
                               content: Text('Something went wrong'),
                             ));
-                          
-
                           }
                         }
-
-                      
-      
-                        
                       }
-                    
                     },
                     color: const Color(0xff02003D),
                     minWidth: double.infinity,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: BorderRadius.circular(24.r),
                     ),
-                    padding: const EdgeInsets.symmetric(vertical: 18),
-                    child:  loading
-                        ? const SizedBox(
-                            height: 11,
-                            width: 11,
-                            child: CircularProgressIndicator(
+                    padding:  EdgeInsets.symmetric(vertical: 18.h),
+                    child: loading
+                        ? SizedBox(
+                            height: 11.h,
+                            width: 11.h,
+                            child:const  CircularProgressIndicator(
                               color: Colors.white,
                               strokeWidth: 2,
                             ))
-                        :  const Text(
-                      'Create account',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'SF-Pro',
-                      ),
-                    ),
+                        : Text(
+                            'Create account',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'SF-Pro',
+                            ),
+                          ),
                   ),
-                  const SizedBox(
-                    height: 32,
+                 SizedBox(
+                    height: 32.h,
                   ),
                   RichText(
                       text: TextSpan(
                           text: 'Already a User? ',
-                          style: const TextStyle(
-                            color: Color(0xffAAA8BD),
-                            fontSize: 12,
+                          style:  TextStyle(
+                            color:const Color(0xffAAA8BD),
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                           ),
                           children: [
                         TextSpan(
                             text: 'Log in to your account',
-                            style: const TextStyle(
-                              color: Color(0xff5F00F8),
-                              fontSize: 12,
+                            style:  TextStyle(
+                              color:const Color(0xff5F00F8),
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
                             ),
                             //this takes the user to the login screen when the text is clicked
@@ -258,7 +251,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ..onTap = () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                      builder: (builder) => const LoginScreen()),
+                                      builder: (builder) =>
+                                          const LoginScreen()),
                                 );
                               })
                       ]))

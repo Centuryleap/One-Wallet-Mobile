@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:one_wallet/ProfileSection/update_username.dart';
@@ -73,8 +74,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     await Permission.manageExternalStorage.request();
 
-   
-
     Directory directory = (await getExternalStorageDirectory())!;
     String fileName = 'cards.csv';
     String newPath = '';
@@ -89,71 +88,71 @@ class _SettingsScreenState extends State<SettingsScreen> {
       } else {
         break;
       }
-     
     }
-                                              
-     newPath = newPath + '/OneWallet';
-     print('New Path : $newPath');
-      directory = Directory(newPath);
+
+    newPath = newPath + '/OneWallet';
+    print('New Path : $newPath');
+    directory = Directory(newPath);
     if (!await directory.exists()) {
       await directory.create(recursive: true);
     }
     if (await directory.exists()) {
       final File file = File(directory.path + '/$fileName');
-      await file.writeAsString(csv).then((value) => ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text('Data exported successfully'))));
+      await file.writeAsString(csv).then((value) =>
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Data exported successfully'))));
     }
-                                             
-  }                                                                                  
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffFAFAFA),
+      backgroundColor: const Color(0xffFAFAFA),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 80),
-              const Text(
+              SizedBox(height: 80.h),
+              Text(
                 'Settings',
                 style: TextStyle(
                     fontFamily: 'SF-Pro',
-                    fontSize: 32,
+                    fontSize: 32.sp,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xff02003D)),
+                    color:const  Color(0xff02003D)),
               ),
-              const SizedBox(height: 54),
-              const Text(
+              SizedBox(height: 54.h),
+               Text(
                 'Account',
                 style: TextStyle(
                   fontFamily: 'SF-Pro',
-                  fontSize: 20,
-                  color: Color(0xff505780),
+                  fontSize: 20.sp,
+                  color:const Color(0xff505780),
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               Container(
-                  padding: const EdgeInsets.all(12),
+                  padding:  EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: const Color(0xff02003D),
-                    borderRadius: BorderRadius.circular(32),
+                    borderRadius: BorderRadius.circular(32.r),
                   ),
                   child: ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: CircleAvatar(
-                      radius: 32,
+                      radius: 32.r,
                       child: Image.asset('assets/profile_picture.png'),
                     ),
                     title: Text(
                       currentUser != null && currentUser!.displayName != null
                           ? currentUser!.displayName!
                           : 'Jenny wilson',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'SF-Pro',
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
@@ -162,23 +161,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         currentUser != null
                             ? currentUser!.email!
                             : 'johndoe@gmail.com',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: 'SF-Pro',
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
-                          color: Color(0xffAAA8BD),
+                          color:const  Color(0xffAAA8BD),
                         )),
                   )),
-              const SizedBox(height: 30),
-              const Text(
+              SizedBox(height: 30.h),
+               Text(
                 'Settings',
                 style: TextStyle(
                   fontFamily: 'SF-Pro',
-                  fontSize: 20,
-                  color: Color(0xff505780),
+                  fontSize: 20.sp,
+                  color:const Color(0xff505780),
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               GestureDetector(
                 //use onTap to navigate to ChangePasswordScreen
                 onTap: () {
@@ -188,36 +187,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: const CircleAvatar(
-                    radius: 24,
+                  leading:  CircleAvatar(
+                    radius: 24.r,
                     backgroundColor: Colors.white,
                     child: Icon(
                       Iconsax.key,
-                      size: 16,
-                      color: Color(0xffAAA8BD),
+                      size: 16.sp,
+                      color:const Color(0xffAAA8BD),
                     ),
                   ),
-                  title: const Text(
+                  title:  Text(
                     'Change password',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 13,
-                      color: Color(0xff0B0B0B),
+                      fontSize: 13.sp,
+                      color:const Color(0xff0B0B0B),
                     ),
                   ),
                   trailing: Container(
-                    width: 40,
-                    height: 40,
+                    width: 40.w,
+                    height: 40.h,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: const Icon(CupertinoIcons.right_chevron,
                         color: Color(0xffAAA8BD)),
                   ),
                 ),
               ),
-              const SizedBox(height: 15),
+              SizedBox(height: 15.h),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 value: _toggled,
@@ -230,116 +229,116 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   });
                 },
                 secondary: CircleAvatar(
-                  radius: 24,
+                  radius: 24.r,
                   backgroundColor: Colors.white,
                   child: SvgPicture.asset(
                     'assets/fingerprint_tiny_svg.svg',
-                    width: 16,
-                    height: 16,
+                    width: 16.w,
+                    height: 16.h,
                   ),
                 ),
-                title: const Text(
+                title:Text(
                   'Enable finger print/Face ID',
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 13,
-                    color: Color(0xff0B0B0B),
+                    fontSize: 13.sp,
+                    color: const  Color(0xff0B0B0B),
                   ),
                 ),
                 activeColor: const Color(0xff02003D),
               ),
-              const SizedBox(height: 15),
+              SizedBox(height: 15.h),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: const CircleAvatar(
-                    radius: 24,
+                leading:  CircleAvatar(
+                    radius: 24.r,
                     backgroundColor: Colors.white,
                     child: Icon(
                       Iconsax.import,
-                      size: 16,
-                      color: Color(0xffAAA8BD),
+                      size: 16.sp,
+                      color:const Color(0xffAAA8BD),
                     )),
-                title: const Text(
+                title:  Text(
                   'Import settings',
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 13,
-                    color: Color(0xff0B0B0B),
+                    fontSize: 13.sp,
+                    color:const Color(0xff0B0B0B),
                   ),
                 ),
                 trailing: Container(
-                  width: 40,
-                  height: 40,
+                  width: 40.w,
+                  height: 40.h,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: const Icon(CupertinoIcons.right_chevron,
                       color: Color(0xffAAA8BD)),
                 ),
               ),
-              const SizedBox(height: 15),
+              SizedBox(height: 15.h),
               GestureDetector(
                 onTap: () => _generateCSV(context),
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: const CircleAvatar(
-                      radius: 24,
+                  leading:  CircleAvatar(
+                      radius: 24.r,
                       backgroundColor: Colors.white,
                       child: Icon(
                         Iconsax.export,
-                        size: 16,
-                        color: Color(0xffAAA8BD),
+                        size: 16.sp,
+                        color:const Color(0xffAAA8BD),
                       )),
-                  title: const Text(
+                  title:  Text(
                     'Export settings',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 13,
-                      color: Color(0xff0B0B0B),
+                      fontSize: 13.sp,
+                      color:const Color(0xff0B0B0B),
                     ),
                   ),
                   trailing: Container(
-                    width: 40,
-                    height: 40,
+                    width: 40.w,
+                    height: 40.h,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: const Icon(CupertinoIcons.right_chevron,
                         color: Color(0xffAAA8BD)),
                   ),
                 ),
               ),
-              const SizedBox(height: 15),
+              SizedBox(height: 15.h),
               GestureDetector(
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const UpdateUsernameScreen(),
                 )),
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: const CircleAvatar(
-                      radius: 24,
+                  leading:  CircleAvatar(
+                      radius: 24.r,
                       backgroundColor: Colors.white,
                       child: Icon(
                         Iconsax.info_circle,
-                        size: 16,
-                        color: Color(0xffAAA8BD),
+                        size: 16.sp,
+                        color:const  Color(0xffAAA8BD),
                       )),
-                  title: const Text(
+                  title:  Text(
                     'Help',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 13,
-                      color: Color(0xff0B0B0B),
+                      fontSize: 13.sp,
+                      color:const Color(0xff0B0B0B),
                     ),
                   ),
                   trailing: Container(
-                    width: 40,
-                    height: 40,
+                    width: 40.w,
+                    height: 40.h,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: const Icon(CupertinoIcons.right_chevron,
                         color: Color(0xffAAA8BD)),

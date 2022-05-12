@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import firebase auth package
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
@@ -25,8 +26,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       backgroundColor: const Color(0xffFAFAFA),
       body: SingleChildScrollView(
         child: Padding(
-            padding: const EdgeInsets.symmetric(                            
-              horizontal: 24,
+            padding:  EdgeInsets.symmetric(                            
+              horizontal: 24.w,
             ),
             child: /// A unique identifier for the form.
             Form(
@@ -34,35 +35,35 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 66,
+                   SizedBox(
+                    height: 66.h,
                   ),
                   Row(
                     children: [
                       IconButton(
-                        icon: const Icon(
+                        icon:  Icon(
                           CupertinoIcons.arrow_left,
-                          color: Color(0xff292D32),
-                          size: 18,
+                          color:const Color(0xff292D32),
+                          size: 18.sp,
                         ),
                         onPressed: () => Navigator.of(context).pop(),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.192,
+                        width: (MediaQuery.of(context).size.width * 0.192).w,
                       ),
-                      const Text(
+                       Text(
                         'Change Password',
                         style: TextStyle(
                           fontFamily: 'SF-Pro',
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xff0B0B0B),
+                          color:const Color(0xff0B0B0B),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 80,
+                   SizedBox(
+                    height: 80.h,
                   ),
                   TextFormField(
                     controller: oldPasswordController,
@@ -77,17 +78,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         hintText: 'Enter old password',
-                        hintStyle: const TextStyle(
-                            color: Color(0xffAAA8BD),
-                            fontSize: 14,
+                        hintStyle:  TextStyle(
+                            color:const Color(0xffAAA8BD),
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w400),
                         fillColor: const Color(0xffFAFBFF),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(16))),
                   ),
-                  const SizedBox(
-                    height: 16,
+                   SizedBox(
+                    height: 16.h,
                   ),
                   TextFormField(
                     controller: newPasswordController,
@@ -102,17 +103,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         hintText: 'Enter new password',
-                        hintStyle: const TextStyle(
-                            color: Color(0xffAAA8BD),
-                            fontSize: 14,
+                        hintStyle:  TextStyle(
+                            color:const Color(0xffAAA8BD),
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w400),
                         fillColor: const Color(0xffFAFBFF),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(16))),
                   ),
-                  const SizedBox(
-                    height: 16,
+                   SizedBox(
+                    height: 16.h,
                   ),
                   TextFormField(
                     controller: confirmPasswordController,
@@ -130,17 +131,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         hintText: 'Confirm new password',
-                        hintStyle: const TextStyle(
-                            color: Color(0xffAAA8BD),
-                            fontSize: 14,
+                        hintStyle:  TextStyle(
+                            color:const Color(0xffAAA8BD),
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w400),
                         fillColor: const Color(0xffFAFBFF),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(16))),
                   ),
-                  const SizedBox(
-                    height: 56,
+                   SizedBox(
+                    height: 56.h,
                   ),
                   MaterialButton(
                     onPressed: () {
@@ -155,12 +156,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       borderRadius: BorderRadius.circular(24),
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 18),
-                    child: const Text(
+                    child:  Text(
                       'Change password',
                       style: TextStyle(
                           fontFamily: 'SF-Pro',
                           color: Colors.white,
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500),
                     ),
                   ),

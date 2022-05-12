@@ -1,6 +1,7 @@
 //  prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_wallet/database/database.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -22,7 +23,7 @@ class BankTile extends StatelessWidget {
     //this initializes thet database using provider
     database = Provider.of<AppDatabase>(context);
     return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(16.r),
       child: Slidable(
         endActionPane: ActionPane(
           extentRatio: 0.25,
@@ -72,10 +73,10 @@ class BankTile extends StatelessWidget {
   Container buildBankTile() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
       ),
       //create list tile with title = cardModel.bankName, subtitle = cardModel.cardNumber and trailing = SvgPicture.asset('assets/mastercard.svg')
       child: ListTile(
@@ -83,23 +84,23 @@ class BankTile extends StatelessWidget {
         contentPadding: EdgeInsets.zero,
         title: Text(
           cardModel.bankName,
-          style: const TextStyle(
+          style:  TextStyle(
               fontFamily: 'SF-Pro',
-              fontSize: 14,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w400,
-              color: Color(0xff0B0B0B)),
+              color: const Color(0xff0B0B0B)),
         ),
         //create subtitle with cardModel.cardNumber that hides the first 4 digits of the number
         subtitle: Text(
           cardModel.cardNumber.replaceRange(0, 4, '****'),
-          style: const TextStyle(
+          style: TextStyle(
               fontFamily: 'SF-Pro',
-              fontSize: 14,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w400,
-              color: Color(0xffB5B3C5)),
+              color:const  Color(0xffB5B3C5)),
         ),
 
-        trailing: SvgPicture.asset('assets/${cardModel.cardType}card.svg'),
+        trailing: SvgPicture.asset('assets/${cardModel.cardType}card.svg',),
       ),
     );
   }

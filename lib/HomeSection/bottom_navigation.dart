@@ -1,6 +1,7 @@
 //, prefer_final_fields, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_wallet/AddCardSection/add_card_screen.dart';
 import 'package:one_wallet/HomeSection/my_cards_screen.dart';
 import 'package:iconsax/iconsax.dart';
@@ -38,8 +39,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
       //create a floating action bar with floatingActionButtonLocation center docked and icon : Icons.add
       floatingActionButton: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        height: 56,
-        width: 56,
+        height: 56.h,
+        width: 56.w,
         child: FittedBox(
           child: FloatingActionButton(
             onPressed: () {
@@ -74,9 +75,9 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                   )
                 : const Padding(
                     padding: EdgeInsets.only(bottom: 4),
-                    child: const Icon(
+                    child: Icon(
                       Iconsax.cards,
-                      color: const Color(0xffAAA8BD),
+                      color:  Color(0xffAAA8BD),
                     ),
                   ),
           ),

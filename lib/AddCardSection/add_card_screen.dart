@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_wallet/widgets/dummy_card_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:drift/drift.dart' as dr;
@@ -65,38 +67,39 @@ class _AddCardScreenState extends State<AddCardScreen> {
       backgroundColor: const Color(0xffFAFAFA),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 66,
+                SizedBox(
+                  height: 66.h,
                 ),
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         CupertinoIcons.arrow_left,
-                        color: Color(0xff292D32),
-                        size: 18,
+                        color: const Color(0xff292D32),
+                        size: 18.sp,
                       ),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.2),
-                    const Text(
+                    SizedBox(
+                        width: (MediaQuery.of(context).size.width * 0.2).w),
+                    Text(
                       'Add Card',
                       style: TextStyle(
                         fontFamily: 'SF-Pro',
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xff0B0B0B),
+                        color: const Color(0xff0B0B0B),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 28),
+                SizedBox(height: 28.h),
                 //fed the dummy card dummy values here
                 DummyCardWidget(
                   cardModel: CardData(
@@ -108,7 +111,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       cvvCode: '---',
                       cardType: 'master'),
                 ),
-                const SizedBox(height: 36),
+                SizedBox(height: 36.h),
                 TextFormField(
                   controller: bankNameController,
                   keyboardType: TextInputType.text,
@@ -118,17 +121,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'Bank name',
-                      hintStyle: const TextStyle(
-                          color: Color(0xffAAA8BD),
-                          fontSize: 14,
+                      hintStyle: TextStyle(
+                          color: const Color(0xffAAA8BD),
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w400),
                       fillColor: const Color(0xffFAFBFF),
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(16))),
+                          borderRadius: BorderRadius.circular(16.r))),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
                 ),
                 TextFormField(
                   controller: cardHolderNameController,
@@ -139,17 +142,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'Card Holder name',
-                      hintStyle: const TextStyle(
+                      hintStyle: TextStyle(
                           color: Color(0xffAAA8BD),
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w400),
                       fillColor: const Color(0xffFAFBFF),
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(16))),
+                          borderRadius: BorderRadius.circular(16.r))),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
@@ -157,7 +160,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
-                      maxLength: 16,
+                  inputFormatters: [LengthLimitingTextInputFormatter(16)],
                   validator: (text) {
                     if (text!.isEmpty) {
                       return 'Please enter card number';
@@ -170,17 +173,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'Card Number',
-                      hintStyle: const TextStyle(
-                          color: Color(0xffAAA8BD),
-                          fontSize: 14,
+                      hintStyle: TextStyle(
+                          color: const Color(0xffAAA8BD),
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w400),
                       fillColor: const Color(0xffFAFBFF),
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(16))),
+                          borderRadius: BorderRadius.circular(16.r))),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
@@ -195,32 +198,31 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     if (text.length != 3) {
                       return 'Please enter valid cvv code';
                     }
-                    return null;       
+                    return null;
                   },
-                  maxLength: 30  ,  
-                  
+                  inputFormatters: [LengthLimitingTextInputFormatter(3)],
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'CVV',
-                      hintStyle: const TextStyle(
-                          color: Color(0xffAAA8BD),
-                          fontSize: 14,
+                      hintStyle: TextStyle(
+                          color: const Color(0xffAAA8BD),
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w400),
                       fillColor: const Color(0xffFAFBFF),
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(16))),
                 ),
-                const SizedBox(
-                  height: 16,                                                                                                
-                ),      
-                TextFormField(           
+                 SizedBox(
+                  height: 16.h,
+                ),
+                TextFormField(
                   keyboardType: TextInputType.text,
                   controller: expiryDateController,
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
-                      maxLength: 5,
+                  inputFormatters: [LengthLimitingTextInputFormatter(5)],
                   validator: (text) {
                     if (text!.isEmpty) {
                       return 'Please enter expiry date';
@@ -237,23 +239,23 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       helperText: 'MM/YY',
                       filled: true,
                       hintText: 'Expiry Date',
-                      hintStyle: const TextStyle(
-                          color: Color(0xffAAA8BD),
-                          fontSize: 14,
+                      hintStyle:  TextStyle(
+                          color: const Color(0xffAAA8BD),
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w400),
                       fillColor: const Color(0xffFAFBFF),
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(16))),
                 ),
-                const SizedBox(height: 16),
+                 SizedBox(height: 16.h),
                 ListTile(
-                  leading: const Text(
+                  leading:  Text(
                     'Choose Card Type',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 13,
-                      color: Color(0xff0B0B0B),
+                      fontSize: 13.sp,
+                      color:const Color(0xff0B0B0B),
                     ),
                   ),
                   trailing: DropdownButton(
@@ -268,8 +270,8 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     },
                   ),
                 ),
-                const SizedBox(
-                  height: 36,
+                 SizedBox(
+                  height: 36.h,
                 ),
                 MaterialButton(
                   onPressed: () async {
@@ -285,13 +287,13 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       expiryDate = expiryDateController.text;
 
                       database.insertCard(CardCompanion(
-                          bankName: dr.Value(bankName),
-                          cardNumber: dr.Value(cardNumber),
-                          expiryDate: dr.Value(expiryDate),
-                          cardHolderName: dr.Value(cardHolderName),
-                          cvvCode: dr.Value(cvvCode),
-                          cardType: dr.Value(cardType),
-                          ));
+                        bankName: dr.Value(bankName),
+                        cardNumber: dr.Value(cardNumber),
+                        expiryDate: dr.Value(expiryDate),
+                        cardHolderName: dr.Value(cardHolderName),
+                        cvvCode: dr.Value(cvvCode),
+                        cardType: dr.Value(cardType),
+                      ));
                       await _showCompletedDialog(context);
 
                       Navigator.of(context).pop();
@@ -300,15 +302,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   color: const Color(0xff02003D),
                   minWidth: double.infinity,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(24.r),
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 18),
-                  child: const Text(
+                  padding: EdgeInsets.symmetric(vertical: 18.h),
+                  child: Text(
                     'Add Card',
                     style: TextStyle(
                         fontFamily: 'SF-Pro',
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500),
                   ),
                 ),

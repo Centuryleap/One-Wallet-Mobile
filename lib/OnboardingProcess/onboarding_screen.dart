@@ -1,5 +1,6 @@
 //  prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:one_wallet/OnboardingProcess/sign_up_screen.dart';
 
@@ -19,56 +20,56 @@ class OnboardingScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 24, top: 76),
+              padding:  EdgeInsets.only(left: 24.w, top: 76.h),
               child: SvgPicture.asset(
                 'assets/onboarding_screen_svg_white.svg',
-                height: 34,
-                width: 154,
+                height: 34.h,
+                width: 154.w,
               ),
             ),
-            const SizedBox(
-              height: 11,
+             SizedBox(
+              height: 11.h,
             ),
             Align(
               alignment: Alignment.centerRight,
-              child: Image.asset('assets/onboarding_card.png'),
+              child: Image.asset('assets/onboarding_card.png', width: 337, height:372.h),
             ),
-            const SizedBox(
-              height: 66,
+           SizedBox(
+              height: 66.h,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Text(
                 'Manage all your cards ',
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontFamily: 'SF-Pro',
-                    fontSize: 28,
+                    fontSize: 28.sp,
                     color: Colors.white),
               ),
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: 10.h,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding:  EdgeInsets.symmetric(horizontal: 24.w),
               //this text was wrapped by container for automatic allignment
               child: Container(
-                child: const Text(                                                                                                                                                                                              
+                child:  Text(                                                                                                                                                                                              
                   'Hold and manage all your card information safely, on one platform.',
                   textAlign: TextAlign.start,
                   style: TextStyle(
                       height: 1.5,
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'SF-Pro',
-                      color: Color(0xffAAA8BD)),
+                      color:const Color(0xffAAA8BD)),
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            SizedBox(height: 40.h),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -81,13 +82,14 @@ class OnboardingScreen extends StatelessWidget {
                     },
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: BorderRadius.circular(24.r),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 52, vertical: 16),
-                    child: const Text(
+                    padding: EdgeInsets.symmetric(horizontal: 52.w, vertical: 16.h),
+                    child: Text(
                       'Sign up',
                       style: TextStyle(
                         color: Colors.black,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -101,13 +103,14 @@ class OnboardingScreen extends StatelessWidget {
                     },
                     color: const Color(0xff32363C),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: BorderRadius.circular(24.r),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 52, vertical: 16),
-                    child: const Text(
+                    padding:  EdgeInsets.symmetric(horizontal: 52.w, vertical: 16.h),
+                    child: Text(
                       'Login',
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

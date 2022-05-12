@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_wallet/CardDetailsSection/card_detail.dart';
 import 'package:one_wallet/database/database.dart';
 import 'package:one_wallet/widgets/bank_tile_widget.dart';
@@ -78,7 +79,7 @@ class _BankListWidgetState extends State<BankListWidget> {
                 ));
           }),
           separatorBuilder: (context, _) {
-            return const SizedBox(height: 8);
+            return  SizedBox(height: 8.h);
           },
           itemCount: widget.cardList.length),
     );

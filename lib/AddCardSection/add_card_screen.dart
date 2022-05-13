@@ -24,7 +24,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
   final cardNumberController = TextEditingController();
   final expiryDateController = TextEditingController();
   final cardHolderNameController = TextEditingController();
-  final cvvController = TextEditingController();
+  final cvvController = TextEditingController();  
 
   //this variables are used to store the values of the form fields
   String bankName = '';

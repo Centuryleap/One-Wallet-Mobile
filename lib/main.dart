@@ -13,6 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.dark,
       statusBarColor: Colors.transparent, // transparent status bar
     ),
   );

@@ -118,6 +118,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
+                      inputFormatters: [LengthLimitingTextInputFormatter(40)],
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'Bank name',
@@ -139,6 +140,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
+                      inputFormatters: [LengthLimitingTextInputFormatter(15)],
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'Card Holder name',

@@ -1,5 +1,7 @@
 //  prefer_const_literals_to_create_immutables, use_full_hex_values_for_flutter_colors
 
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +16,8 @@ import 'package:provider/provider.dart';
 import 'change_password_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
-//import csv package
 import 'package:csv/csv.dart';
+import 'package:drift/drift.dart' as dr;
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -29,6 +31,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _toggled = false;
 
   final currentUser = FirebaseAuth.instance.currentUser;
+
+  late AppDatabase database;
 
   @override
   void initState() {
@@ -46,6 +50,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
+  List<List<dynamic>> loadedCsv = [];
+  Future<List<List<dynamic>>> _loadCSV() async {
+    String path = '/storage/emulated/0/OneWallet/cards.csv';
+
+    final newFile = File(path);
+
+    if (await newFile.exists()) {
+      final file = newFile.openRead();
+
+      loadedCsv = await file
+          .transform(utf8.decoder)
+          .transform(const CsvToListConverter())
+          .toList();
+      if (loadedCsv.length > 1) {
+        for (var i = 1; i < loadedCsv.length; i++) {
+          database.insertCard(CardCompanion(
+            bankName: dr.Value(loadedCsv[i][1].toString()),
+            cardNumber: dr.Value(loadedCsv[i][2].toString()),
+            expiryDate: dr.Value(loadedCsv[i][3].toString()),
+            cardHolderName: dr.Value(loadedCsv[i][4].toString()),
+            cvvCode: dr.Value(loadedCsv[i][5].toString()),
+            cardType: dr.Value(loadedCsv[i][6].toString()),
+            
+          ));
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Data imported successfully')));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('No data to import')));
+      }
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('No data to import')));
+    }
+
+    print(loadedCsv);
+
+    return loadedCsv;
+  }
+
   Future<void> _generateCSV(BuildContext context) async {
     AppDatabase database = Provider.of<AppDatabase>(context, listen: false);
     List<CardData> cards = await database.allCards;
@@ -53,7 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       [
         'id',
         'Bank Name',
-        'Card Number               ',
+        'Card Number',
         'Expiry Date',
         'Card Holder Name',
         'CVV code',
@@ -99,13 +144,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (await directory.exists()) {
       final File file = File(directory.path + '/$fileName');
       await file.writeAsString(csv).then((value) =>
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Data exported successfully'))));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text(
+                  'Data exported successfully to storage/emulated/0/OneWallet/cards.csv'))));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    database = Provider.of<AppDatabase>(context);
     return Scaffold(
       backgroundColor: const Color(0xffFAFAFA),
       body: SingleChildScrollView(
@@ -121,20 +168,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     fontFamily: 'SF-Pro',
                     fontSize: 32.sp,
                     fontWeight: FontWeight.w500,
-                    color:const  Color(0xff02003D)),
+                    color: const Color(0xff02003D)),
               ),
               SizedBox(height: 54.h),
-               Text(
+              Text(
                 'Account',
                 style: TextStyle(
                   fontFamily: 'SF-Pro',
                   fontSize: 20.sp,
-                  color:const Color(0xff505780),
+                  color: const Color(0xff505780),
                 ),
               ),
               SizedBox(height: 24.h),
               Container(
-                  padding:  EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: const Color(0xff02003D),
@@ -165,16 +213,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           fontFamily: 'SF-Pro',
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
-                          color:const  Color(0xffAAA8BD),
+                          color: const Color(0xffAAA8BD),
                         )),
                   )),
               SizedBox(height: 30.h),
-               Text(
+              Text(
                 'Settings',
                 style: TextStyle(
                   fontFamily: 'SF-Pro',
                   fontSize: 20.sp,
-                  color:const Color(0xff505780),
+                  color: const Color(0xff505780),
                 ),
               ),
               SizedBox(height: 24.h),
@@ -187,21 +235,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading:  CircleAvatar(
+                  leading: CircleAvatar(
                     radius: 24.r,
                     backgroundColor: Colors.white,
                     child: Icon(
                       Iconsax.key,
                       size: 16.sp,
-                      color:const Color(0xffAAA8BD),
+                      color: const Color(0xffAAA8BD),
                     ),
                   ),
-                  title:  Text(
+                  title: Text(
                     'Change password',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 13.sp,
-                      color:const Color(0xff0B0B0B),
+                      color: const Color(0xff0B0B0B),
                     ),
                   ),
                   trailing: Container(
@@ -237,44 +285,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     height: 16.h,
                   ),
                 ),
-                title:Text(
-                  'Enable finger print/Face ID',
+                title: Text(
+                  'Enable finger print',
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 13.sp,
-                    color: const  Color(0xff0B0B0B),
+                    color: const Color(0xff0B0B0B),
                   ),
                 ),
                 activeColor: const Color(0xff02003D),
               ),
               SizedBox(height: 15.h),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading:  CircleAvatar(
-                    radius: 24.r,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Iconsax.import,
-                      size: 16.sp,
-                      color:const Color(0xffAAA8BD),
-                    )),
-                title:  Text(
-                  'Import settings',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 13.sp,
-                    color:const Color(0xff0B0B0B),
+              GestureDetector(
+                onTap: () => _loadCSV(),
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: CircleAvatar(
+                      radius: 24.r,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Iconsax.import,
+                        size: 16.sp,
+                        color: const Color(0xffAAA8BD),
+                      )),
+                  title: Text(
+                    'Import CSV',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 13.sp,
+                      color: const Color(0xff0B0B0B),
+                    ),
                   ),
-                ),
-                trailing: Container(
-                  width: 40.w,
-                  height: 40.h,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.r),
+                  trailing: Container(
+                    width: 40.w,
+                    height: 40.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: const Icon(CupertinoIcons.right_chevron,
+                        color: Color(0xffAAA8BD)),
                   ),
-                  child: const Icon(CupertinoIcons.right_chevron,
-                      color: Color(0xffAAA8BD)),
                 ),
               ),
               SizedBox(height: 15.h),
@@ -282,20 +333,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onTap: () => _generateCSV(context),
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading:  CircleAvatar(
+                  leading: CircleAvatar(
                       radius: 24.r,
                       backgroundColor: Colors.white,
                       child: Icon(
                         Iconsax.export,
                         size: 16.sp,
-                        color:const Color(0xffAAA8BD),
+                        color: const Color(0xffAAA8BD),
                       )),
-                  title:  Text(
-                    'Export settings',
+                  title: Text(
+                    'Export CSV',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 13.sp,
-                      color:const Color(0xff0B0B0B),
+                      color: const Color(0xff0B0B0B),
                     ),
                   ),
                   trailing: Container(
@@ -317,20 +368,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 )),
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading:  CircleAvatar(
+                  leading: CircleAvatar(
                       radius: 24.r,
                       backgroundColor: Colors.white,
                       child: Icon(
                         Iconsax.info_circle,
                         size: 16.sp,
-                        color:const  Color(0xffAAA8BD),
+                        color: const Color(0xffAAA8BD),
                       )),
-                  title:  Text(
+                  title: Text(
                     'Help',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 13.sp,
-                      color:const Color(0xff0B0B0B),
+                      color: const Color(0xff0B0B0B),
                     ),
                   ),
                   trailing: Container(

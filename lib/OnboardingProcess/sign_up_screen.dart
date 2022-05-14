@@ -82,8 +82,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     decoration: InputDecoration(
                         filled: true,
-                        labelText: 'Email Address',
-                        labelStyle: TextStyle(
+                        hintText: 'Email Address',
+                        hintStyle: TextStyle(
                             color: const Color(0xffAAA8BD),
                             fontSize: 14.sp,
                             fontFamily: 'SF-Pro',
@@ -110,8 +110,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     obscureText: true,
                     decoration: InputDecoration(
                         filled: true,
-                        labelText: 'Enter Password',
-                        labelStyle: TextStyle(
+                        hintText: 'Enter Password',
+                        hintStyle: TextStyle(
                             color: const Color(0xffAAA8BD),
                             fontSize: 14.sp,
                             fontFamily: 'SF-Pro',
@@ -141,8 +141,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     obscureText: true,
                     decoration: InputDecoration(
                         filled: true,
-                        labelText: 'Confirm Password',
-                        labelStyle: TextStyle(
+                        hintText: 'Confirm Password',
+                        hintStyle: TextStyle(
                             color: const Color(0xffAAA8BD),
                             fontSize: 14.sp,
                             fontFamily: 'SF-Pro',

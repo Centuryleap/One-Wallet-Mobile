@@ -11,6 +11,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+   SystemChrome.setPreferredOrientations([
+     DeviceOrientation.portraitUp,
+      ]);
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.dark,

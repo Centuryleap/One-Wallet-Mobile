@@ -4,6 +4,7 @@ import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:one_wallet/HomeSection/bottom_navigation.dart';
 import 'package:one_wallet/OnboardingProcess/sign_up_screen.dart';
@@ -40,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 86, left: 24, right: 24),
+          padding:  EdgeInsets.only(top: 86.h, left: 24.w, right: 24.w),
           child: Form(
             key: formKey,
             child: Container(
@@ -50,35 +51,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   SvgPicture.asset(
                     'assets/one_wallet_logo.svg',
-                    width: 56,
-                    height: 56,
+                    width: 56.w,
+                    height: 56.h,
                   ),
-                  const SizedBox(
-                    height: 40,
+                   SizedBox(
+                    height: 40.h,
                   ),
-                  const Text(
+                  Text(
                     'Welcome!',
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontFamily: 'SF-Pro',
-                        fontSize: 24,
+                        fontSize: 24.sp,
                         color: Colors.black),
                   ),
-                  const SizedBox(
-                    height: 6,
+                  SizedBox(
+                    height: 6.h,
                   ),
-                  const Text(
+                  Text(
                     'Hey there, enter your\ndetails to continue',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       height: 1.6,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'SF-Pro',
-                      color: Color(0xff505780),
+                      color:const Color(0xff505780),
                     ),
                   ),
-                  const SizedBox(
-                    height: 56,
+                   SizedBox(
+                    height: 56.h,
                   ),
                   TextFormField(
                     controller: _emailController,
@@ -95,19 +97,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         hintText: 'Email Address',
-                        hintStyle: const TextStyle(
-                            color: Color(0xffAAA8BD),
-                            fontSize: 14,
+                        hintStyle:  TextStyle(
+                            color:const Color(0xffAAA8BD),
+                            fontSize: 14.sp,
                             fontFamily: 'SF-Pro',
                             fontWeight: FontWeight.w400),
                         floatingLabelStyle: const TextStyle(color: Color(0xff02003D)),
                         fillColor: const Color(0xffFAFBFF),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(16))),
+                            borderRadius: BorderRadius.circular(16.r))),
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: 20.sp,
                   ),
                   TextFormField(
                     controller: _passwordController,
@@ -122,38 +124,38 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         hintText: 'Enter password',
-                        hintStyle: const TextStyle(
-                            color: Color(0xffAAA8BD),
-                            fontSize: 14,
+                        hintStyle:  TextStyle(
+                            color:const Color(0xffAAA8BD),
+                            fontSize: 14.sp,
                             fontFamily: 'SF-Pro',
                             fontWeight: FontWeight.w400),
                         floatingLabelStyle: const TextStyle(color: Color(0xff02003D)),
                         fillColor: const Color(0xffFAFBFF),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(16))),
+                            borderRadius: BorderRadius.circular(16.r))),
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: 20.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
                         onTap: () => _showSheet(context),
-                        child: const Text(
+                        child:  Text(
                           'Forgot password',
                           style: TextStyle(
-                            color: Color(0xff5F00F8),
-                            fontSize: 12,
+                            color:const Color(0xff5F00F8),
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       )
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: 20.sp,
                   ),
                   MaterialButton(
                     onPressed: () async {
@@ -224,42 +226,42 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: const Color(0xff02003D),
                     minWidth: double.infinity,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: BorderRadius.circular(24.r),
                     ),
-                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    padding:  EdgeInsets.symmetric(vertical: 18.h),
                     child: loading
-                        ? const SizedBox(
-                            height: 11,
-                            width: 11,
-                            child: CircularProgressIndicator(
+                        ?  SizedBox(
+                            height: 11.h,
+                            width: 11.w,
+                            child:const CircularProgressIndicator(
                               color: Colors.white,
                               strokeWidth: 2,
                             ))
-                        : const Text(
+                        : Text(
                             'Login',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 14,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w500),
                           ),
                   ),
-                  const SizedBox(
-                    height: 38,
+                  SizedBox(
+                    height: 38.h,
                   ),
                   RichText(
                     text: TextSpan(
                       text: 'New to Onewallet? ',
-                      style: const TextStyle(
-                        color: Color(0xffAAA8BD),
-                        fontSize: 12,
+                      style:  TextStyle(
+                        color:const Color(0xffAAA8BD),
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                       ),
                       children: [
                         TextSpan(
                             text: 'Create account',
-                            style: const TextStyle(
-                              color: Color(0xff5F00F8),
-                              fontSize: 12,
+                            style:  TextStyle(
+                              color:const Color(0xff5F00F8),
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
                             ),
                             recognizer: TapGestureRecognizer()
@@ -289,52 +291,52 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       builder: (context, controller, offset) {
         return Material(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(32),
-            topRight: Radius.circular(32),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(32.r),
+            topRight: Radius.circular(32.r),
           ),
           child: Container(
-            decoration: const BoxDecoration(
-              color: Color(0xFFFFFFFF),
+            decoration:  BoxDecoration(
+              color: const Color(0xFFFFFFFF),
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(32),
-                topRight: Radius.circular(32),
+                topLeft: Radius.circular(32.r),
+                topRight: Radius.circular(32.r),
               ),
             ),
             child: ListView(
               controller: controller,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding:  EdgeInsets.symmetric(horizontal: 24.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(
-                        height: 32,
+                      SizedBox(
+                        height: 32.h,
                       ),
                       SvgPicture.asset('assets/Rectangle.svg'),
-                      const SizedBox(
-                        height: 32,
+                      SizedBox(
+                        height: 32.h,
                       ),
-                      const Text(
+                       Text(
                         'Forgot password',
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          color: Color(0xff0B0B0B),
-                          fontSize: 24,
+                          color:const Color(0xff0B0B0B),
+                          fontSize: 24.sp,
                         ),
                       ),
-                      const SizedBox(height: 6),
-                      const Text(
+                      SizedBox(height: 6.h),
+                       Text(
                         'Enter email attached to your account',
                         style: TextStyle(
-                            color: Color(0xff505780),
+                            color:const Color(0xff505780),
                             fontWeight: FontWeight.w400,
                             fontFamily: 'Gotham',
-                            fontSize: 14),
+                            fontSize: 14.sp),
                       ),
-                      const SizedBox(
-                        height: 40,
+                      SizedBox(
+                        height: 40.h,
                       ),
                       Padding(
                         padding: EdgeInsets.only(
@@ -346,18 +348,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: InputDecoration(
                               filled: true,
                               labelText: 'Email Address',
-                              labelStyle: const TextStyle(
-                                  color: Color(0xffAAA8BD), fontSize: 14),
+                              labelStyle: TextStyle(
+                                  color: const Color(0xffAAA8BD), fontSize: 14.sp,),
                               floatingLabelStyle:
                                   const TextStyle(color: Color(0xff02003D)),
                               fillColor: const Color(0xffFAFBFF),
                               border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(16))),
+                                  borderRadius: BorderRadius.circular(16.r))),
                         ),
                       ),
-                      const SizedBox(
-                        height: 48,
+                      SizedBox(
+                        height: 48.h,
                       ),
                       MaterialButton(
                         onPressed: () async {
@@ -391,14 +393,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: const Color(0xff02003D),
                         minWidth: double.infinity,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(24.r),
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: const Text(
+                        padding:  EdgeInsets.symmetric(vertical: 20.h),
+                        child:  Text(
                           'Continue',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -443,11 +445,11 @@ class _LoginScreenState extends State<LoginScreen> {
   //                   crossAxisAlignment: CrossAxisAlignment.center,
   //                   children: [
   //                     SizedBox(
-  //                       height: 32,
+  //                       height: 32.h,
   //                     ),
   //                     SvgPicture.asset('assets/Rectangle.svg'),
   //                     SizedBox(
-  //                       height: 32,
+  //                       height: 32.h,
   //                     ),
   //                     Text(
   //                       'Enter OTP',

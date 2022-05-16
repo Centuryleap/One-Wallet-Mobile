@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_wallet/HomeSection/bottom_navigation.dart';
 
 class UpdateUsernameScreen extends StatefulWidget {
@@ -28,42 +29,42 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen> {
       backgroundColor: const Color(0xffFAFAFA),
       body: SingleChildScrollView(
         child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
+            padding: EdgeInsets.symmetric(
+              horizontal: 24.w,
             ),
             child: Form(
               key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 66,
+                  SizedBox(
+                    height: 66.h,
                   ),
                   Row(
                     children: [
                       InkWell(
                           onTap: () => Navigator.of(context).pop(),
-                          child: const Icon(
+                          child: Icon(
                             CupertinoIcons.arrow_left,
-                            color: Color(0xff292D32),
-                            size: 18,
+                            color:const  Color(0xff292D32),
+                            size: 18.sp,
                           )),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.192,
                       ),
-                      const Text(
+                       Text(
                         'What is your First Name?',
                         style: TextStyle(
                           fontFamily: 'SF-Pro',
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xff0B0B0B),
+                          color:const Color(0xff0B0B0B),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 80,
+                 SizedBox(
+                    height: 80.h,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.text,
@@ -83,17 +84,17 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         hintText: 'Enter your name',
-                        hintStyle: const TextStyle(
-                            color: Color(0xffAAA8BD),
-                            fontSize: 14,
+                        hintStyle:  TextStyle(
+                            color:const Color(0xffAAA8BD),
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w400),
                         fillColor: const Color(0xffFAFBFF),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(16))),
+                            borderRadius: BorderRadius.circular(16.r))),
                   ),
-                  const SizedBox(
-                    height: 56,
+                   SizedBox(
+                    height: 56.h,
                   ),
                   MaterialButton(
                     onPressed: () async {
@@ -123,23 +124,23 @@ class _UpdateUsernameScreenState extends State<UpdateUsernameScreen> {
                     color: const Color(0xff02003D),
                     minWidth: double.infinity,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: BorderRadius.circular(24.r),
                     ),
-                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    padding:  EdgeInsets.symmetric(vertical: 18.h),
                     child: loading
-                        ? const SizedBox(
-                            height: 11,
-                            width: 11,
-                            child: CircularProgressIndicator(
+                        ?  SizedBox(
+                            height: 11.h,
+                            width: 11.w,
+                            child:const  CircularProgressIndicator(
                               color: Colors.white,
                               strokeWidth: 2,
                             ))
-                        : const Text(
+                        :  Text(
                             'Update Name',
                             style: TextStyle(
                                 fontFamily: 'SF-Pro',
                                 color: Colors.white,
-                                fontSize: 14,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w500),
                           ),
                   ),

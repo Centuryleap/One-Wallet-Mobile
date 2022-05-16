@@ -9,8 +9,8 @@ import 'package:one_wallet/widgets/bank_list_widget.dart';
 import 'package:one_wallet/widgets/no_card_available_widget.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-//import animated text kit package
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class MyCards extends StatefulWidget {
@@ -37,29 +37,29 @@ class _MyCardsState extends State<MyCards> {
       backgroundColor:const  Color(0xffFAFAFA),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding:  EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(height: 76),
+               SizedBox(height: 76.h),
               SvgPicture.asset(
                 'assets/onboarding_screen_svg_black.svg',
-                width: 154,
-                height: 34,
+                width: 154.w,
+                height: 34.h,
               ),
-              const SizedBox(height: 40),
+               SizedBox(height: 40.h),
               //this is the widget that shows the man holding the cofee and name of the user
               Stack(
                 clipBehavior: Clip.none,
                 children: [
                   Container(
-                    padding:const  EdgeInsets.only(
-                      left: 24,
-                      top: 36,
+                    padding: EdgeInsets.only(
+                      left: 24.w,
+                      top: 36.h,
                     ),
                     width: double.infinity,
-                    height: 148,
+                    height: 148.h,
                     decoration: BoxDecoration(
                       color: const Color(0xff02003D),
                       borderRadius: BorderRadius.circular(16),
@@ -76,7 +76,7 @@ class _MyCardsState extends State<MyCards> {
                                   textStyle: TextStyle(
                                     color: Colors.white,
                                     fontFamily: sfpro,
-                                    fontSize: 20,
+                                    fontSize: 20.sp,
                                     fontWeight: FontWeight.w500,
                                   )),
                             ]),
@@ -89,7 +89,7 @@ class _MyCardsState extends State<MyCards> {
                                     : 'User',
                                     textStyle: GoogleFonts.inter(
                                       color: Colors.white,
-                                      fontSize: 20,
+                                      fontSize: 20.sp,
                                       fontWeight: FontWeight.w700),
                                       
                               ),
@@ -97,17 +97,17 @@ class _MyCardsState extends State<MyCards> {
                           ],
                         ),
                         
-                        const SizedBox(height: 4),
+                         SizedBox(height: 4.h),
                         Text(
                           'Welcome back',
                           style: TextStyle(
                             color: const Color(0xffAAA8BD),
                             fontFamily: sfpro,
                             fontWeight: FontWeight.w400,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                           ),
                         ),
-                       const  SizedBox(height: 16),
+                       SizedBox(height: 16.h),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -118,8 +118,8 @@ class _MyCardsState extends State<MyCards> {
                                     duration: const Duration(milliseconds: 500)));
                           },
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 28, vertical: 12),
+                            padding:EdgeInsets.symmetric(
+                                horizontal: 28.w, vertical: 12.h),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
                               color: const Color(0xffFFFFFF).withOpacity(.24),
@@ -129,7 +129,7 @@ class _MyCardsState extends State<MyCards> {
                                   color: const Color(0xffFFFFFF),
                                   fontFamily: sfpro,
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                 )),
                           ),
                         )
@@ -137,17 +137,17 @@ class _MyCardsState extends State<MyCards> {
                     ),
                   ),
                   Positioned(
-                      bottom: 0,
-                      right: -40,
+                      bottom: 0.h,
+                      right: -40.w,
                       child: Image.asset(
                         'assets/man_holding_cup.png',
-                        width: 264,
-                        height: 211,
+                        width: 264.w,
+                        height: 211.h,
                       ))
                 ],
               ),
-              const SizedBox(
-                height: 48
+               SizedBox(
+                height: 48.h
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -156,7 +156,7 @@ class _MyCardsState extends State<MyCards> {
                     'My cards',
                     style: TextStyle(
                         fontFamily: sfpro,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         color: const Color(0xff505780),
                         fontWeight: FontWeight.w400),
                   ),

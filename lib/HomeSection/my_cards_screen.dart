@@ -1,6 +1,7 @@
 //  prefer_const_literals_to_create_immutables
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:one_wallet/AddCardSection/add_card_screen.dart';
@@ -11,7 +12,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 
 class MyCards extends StatefulWidget {
   const MyCards({Key? key}) : super(key: key);
@@ -34,21 +34,21 @@ class _MyCardsState extends State<MyCards> {
     //gets the database from the provider
     database = Provider.of<AppDatabase>(context);
     return Scaffold(
-      backgroundColor:const  Color(0xffFAFAFA),
+      backgroundColor: const Color(0xffFAFAFA),
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-               SizedBox(height: 76.h),
+              SizedBox(height: 76.h),
               SvgPicture.asset(
                 'assets/onboarding_screen_svg_black.svg',
                 width: 154.w,
                 height: 34.h,
               ),
-               SizedBox(height: 40.h),
+              SizedBox(height: 40.h),
               //this is the widget that shows the man holding the cofee and name of the user
               Stack(
                 clipBehavior: Clip.none,
@@ -70,34 +70,32 @@ class _MyCardsState extends State<MyCards> {
                         Row(
                           children: [
                             AnimatedTextKit(
-                              totalRepeatCount: 2,
-                              animatedTexts: [
-                              WavyAnimatedText('Hi ',
-                                  textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: sfpro,
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w500,
-                                  )),
-                            ]),
+                                totalRepeatCount: 2,
+                                animatedTexts: [
+                                  WavyAnimatedText('Hi ',
+                                      textStyle: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: sfpro,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w500,
+                                      )),
+                                ]),
                             AnimatedTextKit(
-                              totalRepeatCount: 2,
-                              animatedTexts: [
-                              WavyAnimatedText(
-                                currentUser != null
-                                    ? currentUser!.displayName!
-                                    : 'User',
+                                totalRepeatCount: 2,
+                                animatedTexts: [
+                                  WavyAnimatedText(
+                                    currentUser != null
+                                        ? currentUser!.displayName!
+                                        : 'User',
                                     textStyle: GoogleFonts.inter(
-                                      color: Colors.white,
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.w700),
-                                      
-                              ),
-                            ])
+                                        color: Colors.white,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ])
                           ],
                         ),
-                        
-                         SizedBox(height: 4.h),
+                        SizedBox(height: 4.h),
                         Text(
                           'Welcome back',
                           style: TextStyle(
@@ -107,7 +105,7 @@ class _MyCardsState extends State<MyCards> {
                             fontSize: 12.sp,
                           ),
                         ),
-                       SizedBox(height: 16.h),
+                        SizedBox(height: 16.h),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -115,10 +113,11 @@ class _MyCardsState extends State<MyCards> {
                                 PageTransition(
                                     child: const AddCardScreen(),
                                     type: PageTransitionType.bottomToTop,
-                                    duration: const Duration(milliseconds: 500)));
+                                    duration:
+                                        const Duration(milliseconds: 500)));
                           },
                           child: Container(
-                            padding:EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                                 horizontal: 28.w, vertical: 12.h),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
@@ -146,9 +145,7 @@ class _MyCardsState extends State<MyCards> {
                       ))
                 ],
               ),
-               SizedBox(
-                height: 48.h
-              ),
+              SizedBox(height: 48.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -181,7 +178,7 @@ class _MyCardsState extends State<MyCards> {
                           ConnectionState.active ||
                       snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {
-                      return const Center(child:  Text('There was an error'));
+                      return const Center(child: Text('There was an error'));
                     } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                       return BankListWidget(cardList: snapshot.data!);
                     } else {

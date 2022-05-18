@@ -26,24 +26,26 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       backgroundColor: const Color(0xffFAFAFA),
       body: SingleChildScrollView(
         child: Padding(
-            padding:  EdgeInsets.symmetric(                            
+            padding: EdgeInsets.symmetric(
               horizontal: 24.w,
             ),
-            child: /// A unique identifier for the form.
-            Form(
-              key: formKey,                                                                                                                                                  
+            child:
+
+                /// A unique identifier for the form.
+                Form(
+              key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   SizedBox(
+                  SizedBox(
                     height: 66.h,
                   ),
                   Row(
                     children: [
                       IconButton(
-                        icon:  Icon(
+                        icon: Icon(
                           CupertinoIcons.arrow_left,
-                          color:const Color(0xff292D32),
+                          color: const Color(0xff292D32),
                           size: 18.sp,
                         ),
                         onPressed: () => Navigator.of(context).pop(),
@@ -51,18 +53,18 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       SizedBox(
                         width: (MediaQuery.of(context).size.width * 0.192).w,
                       ),
-                       Text(
+                      Text(
                         'Change Password',
                         style: TextStyle(
                           fontFamily: 'SF-Pro',
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
-                          color:const Color(0xff0B0B0B),
+                          color: const Color(0xff0B0B0B),
                         ),
                       ),
                     ],
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 80.h,
                   ),
                   TextFormField(
@@ -78,8 +80,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         hintText: 'Enter old password',
-                        hintStyle:  TextStyle(
-                            color:const Color(0xffAAA8BD),
+                        hintStyle: TextStyle(
+                            color: const Color(0xffAAA8BD),
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400),
                         fillColor: const Color(0xffFAFBFF),
@@ -87,7 +89,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(16))),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 16.h,
                   ),
                   TextFormField(
@@ -103,8 +105,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         hintText: 'Enter new password',
-                        hintStyle:  TextStyle(
-                            color:const Color(0xffAAA8BD),
+                        hintStyle: TextStyle(
+                            color: const Color(0xffAAA8BD),
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400),
                         fillColor: const Color(0xffFAFBFF),
@@ -112,7 +114,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(16))),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 16.h,
                   ),
                   TextFormField(
@@ -131,8 +133,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         hintText: 'Confirm new password',
-                        hintStyle:  TextStyle(
-                            color:const Color(0xffAAA8BD),
+                        hintStyle: TextStyle(
+                            color: const Color(0xffAAA8BD),
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400),
                         fillColor: const Color(0xffFAFBFF),
@@ -140,7 +142,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(16))),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 56.h,
                   ),
                   MaterialButton(
@@ -156,7 +158,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       borderRadius: BorderRadius.circular(24),
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 18),
-                    child:  Text(
+                    child: Text(
                       'Change password',
                       style: TextStyle(
                           fontFamily: 'SF-Pro',
@@ -174,30 +176,31 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   /// _changePassword() takes two strings, the current password and the new password, and then changes
   /// the password of the current user to the new password
-  /// 
+  ///
   /// Args:
   ///   currentPassword (String): The user's current password.
   ///   newPassword (String): The new password.
-  void _changePassword(
-      String currentPassword, String newPassword) async {
+  void _changePassword(String currentPassword, String newPassword) async {
     User? user = FirebaseAuth.instance.currentUser;
-    if(user != null){  final cred = EmailAuthProvider.credential(
-        email: user.email!, password: currentPassword);
+    if (user != null) {
+      final cred = EmailAuthProvider.credential(
+          email: user.email!, password: currentPassword);
 
-    try {
-      await user.reauthenticateWithCredential(cred);
       try {
-        await user.updatePassword(newPassword).then((value) =>   ScaffoldMessenger.of(formKey.currentState!.context)
-            .showSnackBar(const SnackBar(content:  Text('Password Updated')))   );
-        Navigator.pop(context);
+        await user.reauthenticateWithCredential(cred);
+        try {
+          await user.updatePassword(newPassword).then((value) =>
+              ScaffoldMessenger.of(formKey.currentState!.context).showSnackBar(
+                  const SnackBar(content: Text('Password Updated'))));
+          Navigator.pop(context);
+        } on FirebaseAuthException catch (e) {
+          ScaffoldMessenger.of(formKey.currentState!.context)
+              .showSnackBar(SnackBar(content: Text(e.code)));
+        }
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(formKey.currentState!.context)
             .showSnackBar(SnackBar(content: Text(e.code)));
       }
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(formKey.currentState!.context)
-          .showSnackBar(SnackBar(content: Text(e.code)));
-    }}
-  
+    }
   }
 }

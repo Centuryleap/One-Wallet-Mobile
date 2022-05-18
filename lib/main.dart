@@ -2,6 +2,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:one_wallet/OnboardingProcess/splash_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:one_wallet/database/database.dart';
@@ -9,11 +10,15 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'app/constants/theme_provider/app_theme.dart';
+
 void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('savedDarkTheme');
   WidgetsFlutterBinding.ensureInitialized();
-   SystemChrome.setPreferredOrientations([
-     DeviceOrientation.portraitUp,
-      ]);
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.dark,
@@ -47,13 +52,19 @@ class MyApp extends StatelessWidget {
             minTextAdapt: true,
             splitScreenMode: true,
             builder: (child) {
-              return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  title: 'Flutter Demo',
-                  theme: ThemeData(
-                    fontFamily: 'Gotham',
-                  ),
-                  home: SplashScreen());
+              return ValueListenableBuilder(
+                valueListenable: Hive.box('savedDarkTheme').listenable(),
+                builder: (context, Box box, widget) {
+                  var darkMode = box.get('darkMode', defaultValue: false);
+                  return MaterialApp(
+                      debugShowCheckedModeBanner: false,
+                      title: 'Flutter Demo',
+                      themeMode: darkMode ? ThemeMode.light : ThemeMode.light,
+                      theme: AppTheme.lightTheme(),
+                      darkTheme: AppTheme.darkTheme(),
+                      home: SplashScreen());
+                },
+              );
             }),
       ),
     );

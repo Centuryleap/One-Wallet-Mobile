@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:one_wallet/helpers/card_expiration_formatter.dart';
 import 'package:one_wallet/widgets/dummy_card_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:drift/drift.dart' as dr;
@@ -24,7 +25,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
   final cardNumberController = TextEditingController();
   final expiryDateController = TextEditingController();
   final cardHolderNameController = TextEditingController();
-  final cvvController = TextEditingController();  
+  final cvvController = TextEditingController();
 
   //this variables are used to store the values of the form fields
   String bankName = '';
@@ -118,7 +119,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
-                      inputFormatters: [LengthLimitingTextInputFormatter(40)],
+                  inputFormatters: [LengthLimitingTextInputFormatter(40)],
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'Bank name',
@@ -140,7 +141,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
-                      inputFormatters: [LengthLimitingTextInputFormatter(15)],
+                  inputFormatters: [LengthLimitingTextInputFormatter(15)],
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'Card Holder name',
@@ -215,16 +216,16 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(16))),
                 ),
-                 SizedBox(
+                SizedBox(
                   height: 16.h,
                 ),
                 TextFormField(
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   controller: expiryDateController,
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
-                  inputFormatters: [LengthLimitingTextInputFormatter(5)],
+                  inputFormatters: [LengthLimitingTextInputFormatter(5), CardExpirationFormatter()],
                   validator: (text) {
                     if (text!.isEmpty) {
                       return 'Please enter expiry date';
@@ -235,13 +236,27 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     if (!text.contains('/')) {
                       return 'Please input expiry date in format MM/YY';
                     }
+                    if (!text.startsWith('01') ||
+                        !text.startsWith('02') ||
+                        !text.startsWith('03') ||
+                        !text.startsWith('04') ||
+                        !text.startsWith('05') ||
+                        !text.startsWith('06') ||
+                        !text.startsWith('07') ||
+                        !text.startsWith('08') ||
+                        !text.startsWith('09') ||
+                        !text.startsWith('10') ||
+                        !text.startsWith('11') ||
+                        !text.startsWith('12')) {
+                      return 'Please enter valid month';
+                    }
                     return null;
                   },
                   decoration: InputDecoration(
                       helperText: 'MM/YY',
                       filled: true,
                       hintText: 'Expiry Date',
-                      hintStyle:  TextStyle(
+                      hintStyle: TextStyle(
                           color: const Color(0xffAAA8BD),
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400),
@@ -250,29 +265,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(16))),
                 ),
-                 SizedBox(height: 16.h),
-                ListTile(
-                  leading:  Text(
-                    'Choose Card Type',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 13.sp,
-                      color:const Color(0xff0B0B0B),
-                    ),
-                  ),
-                  trailing: DropdownButton(
-                    value: cardType,
-                    items: _dropdownMenuItems,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        if (newValue != null) {
-                          cardType = newValue;
-                        }
-                      });
-                    },
-                  ),
-                ),
-                 SizedBox(
+                SizedBox(height: 16.h),
+               
+                SizedBox(
                   height: 36.h,
                 ),
                 MaterialButton(
@@ -287,6 +282,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       cardNumber = cardNumberController.text;
                       cvvCode = cvvController.text;
                       expiryDate = expiryDateController.text;
+
+                      if (cardNumberController.text.startsWith('4')) {
+                        cardType = 'visa';
+                      } else if (cardNumberController.text.startsWith('5061')) {
+                        cardType = 'verve';
+                      } else if (cardNumberController.text.startsWith('5') &&
+                          !cardNumberController.text.startsWith('5061')) {
+                        cardType = 'master';
+                      } 
 
                       database.insertCard(CardCompanion(
                         bankName: dr.Value(bankName),

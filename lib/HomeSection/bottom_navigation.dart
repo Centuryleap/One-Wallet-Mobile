@@ -9,6 +9,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:one_wallet/ProfileSection/settings_screen.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
   const BottomNavigationScreen({Key? key}) : super(key: key);
@@ -40,16 +41,15 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
       onWillPop: () async {
         if (DateTime.now().difference(_lastExitTime) >=
             const Duration(seconds: 1)) {
-          //showing message to user
-          const snack = SnackBar(
-            content: Text(
-              "Press the back button again to exit the app",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900),
-            ),
-            duration: Duration(seconds: 2),
-            backgroundColor: Color(0XFF02003D),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snack);
+          
+          Fluttertoast.showToast(
+              msg: "Press the back button again to exit the app",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 2,
+              backgroundColor: Colors.white70,
+              textColor: Colors.black,
+              fontSize: 14.0);
           _lastExitTime = DateTime.now();
           return Future.value(false); // disable back press
         } else {

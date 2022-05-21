@@ -11,6 +11,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:one_wallet/OnboardingProcess/log_in_screen.dart';
+import 'package:one_wallet/ProfileSection/update_username.dart';
 import 'package:one_wallet/database/database.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -87,8 +89,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           .showSnackBar(const SnackBar(content: Text('No data to import')));
     }
 
-   
-
     return loadedCsv;
   }
 
@@ -123,7 +123,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Directory directory = (await getExternalStorageDirectory())!;
     String fileName = 'cards.csv';
     String newPath = '';
-   
 
     List<String> paths = directory.path.split('/');
 
@@ -137,7 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
 
     newPath = newPath + '/OneWallet';
-   
+
     directory = Directory(newPath);
     if (!await directory.exists()) {
       await directory.create(recursive: true);
@@ -149,6 +148,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               content: Text(
                   'Data exported successfully to storage/emulated/0/OneWallet/cards.csv'))));
     }
+  }
+
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+        (Route<dynamic> route) => false);
   }
 
   @override
@@ -390,6 +397,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         child: const Icon(CupertinoIcons.right_chevron,
                             color: Color(0xffAAA8BD)),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15.h),
+                  GestureDetector(
+                    onTap: () => _signOut(),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: CircleAvatar(
+                          radius: 24.r,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Iconsax.logout,
+                            size: 16.sp,
+                            color: const Color(0xffFF0000),
+                          )),
+                      title: Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13.sp,
+                          color: const Color(0xff0B0B0B),
+                        ),
                       ),
                     ),
                   ),

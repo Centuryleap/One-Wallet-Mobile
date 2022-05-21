@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_wallet/database/database.dart';
 import 'package:one_wallet/widgets/dummy_card_widget.dart';
 import 'package:provider/provider.dart';
+
+import '../helpers/card_expiration_formatter.dart';
 
 class EditCardScreen extends StatefulWidget {
   const EditCardScreen({required this.cardModel, Key? key}) : super(key: key);
@@ -85,7 +88,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                     IconButton(
                       icon: Icon(
                         CupertinoIcons.arrow_left,
-                        color:const  Color(0xff292D32),
+                        color: const Color(0xff292D32),
                         size: 18.sp,
                       ),
                       onPressed: () => Navigator.of(context).pop(),
@@ -122,6 +125,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
+                  inputFormatters: [LengthLimitingTextInputFormatter(40)],
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'Bank name',
@@ -143,6 +147,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
+                  inputFormatters: [LengthLimitingTextInputFormatter(15)],
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'Card Holder name',
@@ -155,7 +160,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(16.r))),
                 ),
-                 SizedBox(
+                SizedBox(
                   height: 16.h,
                 ),
                 TextFormField(
@@ -164,6 +169,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
+                  inputFormatters: [LengthLimitingTextInputFormatter(16)],
                   validator: (text) {
                     if (text!.isEmpty) {
                       return 'Please enter card number';
@@ -185,7 +191,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(16.r))),
                 ),
-                 SizedBox(
+                SizedBox(
                   height: 16.h,
                 ),
                 TextFormField(
@@ -194,6 +200,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
+                  inputFormatters: [LengthLimitingTextInputFormatter(3)],
                   validator: (text) {
                     if (text!.isEmpty) {
                       return 'Please enter cvv code';
@@ -206,8 +213,8 @@ class _EditCardScreenState extends State<EditCardScreen> {
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'CVV',
-                      hintStyle:  TextStyle(
-                          color:const Color(0xffAAA8BD),
+                      hintStyle: TextStyle(
+                          color: const Color(0xffAAA8BD),
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400),
                       fillColor: const Color(0xffFAFBFF),
@@ -215,11 +222,11 @@ class _EditCardScreenState extends State<EditCardScreen> {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(16.r))),
                 ),
-                 SizedBox(
+                SizedBox(
                   height: 16.h,
                 ),
                 TextFormField(
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   controller: expiryDateController,
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
@@ -234,8 +241,26 @@ class _EditCardScreenState extends State<EditCardScreen> {
                     if (!text.contains('/')) {
                       return 'Please input expiry date in format MM/YY';
                     }
+                    if (!text.startsWith('01') &&
+                        !text.startsWith('02') &&
+                        !text.startsWith('03') &&
+                        !text.startsWith('04') &&
+                        !text.startsWith('05') &&
+                        !text.startsWith('06') &&
+                        !text.startsWith('07') &&
+                        !text.startsWith('08') &&
+                        !text.startsWith('09') &&
+                        !text.startsWith('10') &&
+                        !text.startsWith('11') &&
+                        !text.startsWith('12')) {
+                      return 'Please enter valid month';
+                    }
                     return null;
                   },
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(5),
+                    CardExpirationFormatter()
+                  ],
                   decoration: InputDecoration(
                       helperText: 'MM/YY',
                       filled: true,
@@ -265,6 +290,16 @@ class _EditCardScreenState extends State<EditCardScreen> {
                       cvvCode = cvvController.text;
                       expiryDate = expiryDateController.text;
 
+                      String cardType = 'master';
+                      if (cardNumberController.text.startsWith('4')) {
+                        cardType = 'visa';
+                      } else if (cardNumberController.text.startsWith('5061')) {
+                        cardType = 'verve';
+                      } else if (cardNumberController.text.startsWith('5') &&
+                          !cardNumberController.text.startsWith('5061')) {
+                        cardType = 'master';
+                      }
+
                       _database.updateCard(CardData(
                           id: widget.cardModel.id,
                           bankName: bankName,
@@ -284,7 +319,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                     borderRadius: BorderRadius.circular(24.r),
                   ),
                   padding: EdgeInsets.symmetric(vertical: 18.h),
-                  child:  Text(
+                  child: Text(
                     'Save Changes',
                     style: TextStyle(
                         fontFamily: 'SF-Pro',

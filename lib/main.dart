@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -9,7 +7,6 @@ import 'package:one_wallet/database/database.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'app/constants/theme_provider/app_theme.dart';
 
 void main() async {
@@ -20,7 +17,7 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
+    const SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.dark,
       statusBarColor: Colors.transparent, // transparent status bar
     ),
@@ -36,7 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //this loads the onboarding image before app loads to reduce lag effect
-    precacheImage(AssetImage('assets/onboarding_card.png'), context);
+    precacheImage(const AssetImage('assets/onboarding_card.png'), context);
     //this loads the no card illustration before app loads to reduce lag effect
     precachePicture(
         ExactAssetPicture(SvgPicture.svgStringDecoderBuilder,
@@ -62,7 +59,7 @@ class MyApp extends StatelessWidget {
                       themeMode: darkMode ? ThemeMode.light : ThemeMode.light,
                       theme: AppTheme.lightTheme(),
                       darkTheme: AppTheme.darkTheme(),
-                      home: SplashScreen());
+                      home: const SplashScreen());
                 },
               );
             }),

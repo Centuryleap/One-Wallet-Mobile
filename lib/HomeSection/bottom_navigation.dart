@@ -19,7 +19,7 @@ class BottomNavigationScreen extends StatefulWidget {
 
 class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   //this stores the list of screen that can be navigated to
-  final List<Widget> _screens = [const MyCards(), SettingsScreen()];
+  final List<Widget> _screens = [const MyCards(), const SettingsScreen()];
 
   //used to check the current screen
   int _selectedIndex = 0;
@@ -118,7 +118,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                       padding: EdgeInsets.only(bottom: 4),
                       child: Icon(
                         Iconsax.setting,
-                        color: const Color(0xffAAA8BD),
+                        color: Color(0xffAAA8BD),
                       ),
                     ),
             ),

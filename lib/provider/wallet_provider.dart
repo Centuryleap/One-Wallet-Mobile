@@ -18,7 +18,6 @@ class CardProvider extends ChangeNotifier {
 //add credit card details to list
   void addCardModel(CardModel cardModel) {
     _cardModelList.add(cardModel);
-    print(cardModel.cardNumber);
     notifyListeners();
   }
 

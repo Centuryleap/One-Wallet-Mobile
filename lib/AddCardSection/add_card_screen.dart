@@ -145,7 +145,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       filled: true,
                       hintText: 'Card Holder name',
                       hintStyle: TextStyle(
-                          color: Color(0xffAAA8BD),
+                          color:    const Color(0xffAAA8BD),
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400),
                       fillColor: const Color(0xffFAFBFF),

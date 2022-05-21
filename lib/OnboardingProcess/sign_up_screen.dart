@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:one_wallet/OnboardingProcess/log_in_screen.dart';
 
 class SignUpScreen extends StatefulWidget {

@@ -7,12 +7,10 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:one_wallet/ProfileSection/update_username.dart';
 import 'package:one_wallet/database/database.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -89,7 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           .showSnackBar(const SnackBar(content: Text('No data to import')));
     }
 
-    print(loadedCsv);
+   
 
     return loadedCsv;
   }
@@ -125,7 +123,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Directory directory = (await getExternalStorageDirectory())!;
     String fileName = 'cards.csv';
     String newPath = '';
-    print('directory: $directory');
+   
 
     List<String> paths = directory.path.split('/');
 
@@ -139,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
 
     newPath = newPath + '/OneWallet';
-    print('New Path : $newPath');
+   
     directory = Directory(newPath);
     if (!await directory.exists()) {
       await directory.create(recursive: true);

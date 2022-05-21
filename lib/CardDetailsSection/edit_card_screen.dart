@@ -22,6 +22,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
 
   late String previousCardNumber = widget.cardModel.bankName;
 
+
   //this variables are controllers attached to Form Fields to monitor them
   late TextEditingController bankNameController;
   late TextEditingController cardNumberController;
@@ -35,6 +36,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
   String expiryDate = '';
   String cardHolderName = '';
   String cvvCode = '';
+  String cardType = 'master';
 
   //use this to keep track of when the form is submitted
   bool _submitted = false;
@@ -290,7 +292,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                       cvvCode = cvvController.text;
                       expiryDate = expiryDateController.text;
 
-                      String cardType = 'master';
+                      
                       if (cardNumberController.text.startsWith('4')) {
                         cardType = 'visa';
                       } else if (cardNumberController.text.startsWith('5061')) {
@@ -306,7 +308,8 @@ class _EditCardScreenState extends State<EditCardScreen> {
                           cardNumber: cardNumber,
                           expiryDate: expiryDate,
                           cardHolderName: cardHolderName,
-                          cvvCode: cvvCode));
+                          cvvCode: cvvCode,
+                          cardType: cardType));
 
                       await _showCompletedDialog(context);
 

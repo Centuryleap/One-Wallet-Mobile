@@ -84,7 +84,7 @@ class OnboardingScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24.r),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 52.w, vertical: 16.h),
+                    padding: EdgeInsets.symmetric(horizontal: 52.w, vertical: 21.h),
                     child: Text(
                       'Sign up',
                       style: TextStyle(
@@ -105,7 +105,7 @@ class OnboardingScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24.r),
                     ),
-                    padding:  EdgeInsets.symmetric(horizontal: 52.w, vertical: 16.h),
+                    padding:  EdgeInsets.symmetric(horizontal: 52.w, vertical: 21.h),
                     child: Text(
                       'Login',
                       style: TextStyle(

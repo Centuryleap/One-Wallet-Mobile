@@ -90,7 +90,7 @@ class _BankListWidgetState extends State<BankListWidget> {
     try {
       canCheckBiometrics = await _authentication.canCheckBiometrics;
     } on PlatformException catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
     if (!mounted) return;
 
@@ -104,7 +104,7 @@ class _BankListWidgetState extends State<BankListWidget> {
     try {
       availableBiometrics = await _authentication.getAvailableBiometrics();
     } on PlatformException catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
     if (!mounted) return;
 
@@ -122,7 +122,7 @@ class _BankListWidgetState extends State<BankListWidget> {
         options: const AuthenticationOptions(stickyAuth: true),
       );
     } on PlatformException catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
     if (!mounted) return;
 

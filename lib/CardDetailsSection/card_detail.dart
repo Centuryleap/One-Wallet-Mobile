@@ -65,7 +65,7 @@ class _CardDetailsState extends State<CardDetails> {
                           ));
                 },
                 child: ListTile(
-                  contentPadding: EdgeInsets.only(left: 20),
+                  contentPadding: const EdgeInsets.only(left: 20),
                   leading: SvgPicture.asset('assets/copy_tiny_svg.svg'),
                   title: Text(
                     'Copy card details',
@@ -158,7 +158,7 @@ class _CardDetailsState extends State<CardDetails> {
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 14.sp,
-                      color: Color(0xff505780),
+                      color: const Color(0xff505780),
                     ),
                   ),
                   subtitle: Text(

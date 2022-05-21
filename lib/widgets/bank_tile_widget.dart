@@ -8,20 +8,26 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
-class BankTile extends StatelessWidget {
-  BankTile({required this.cardModel, Key? key}) : super(key: key);
+class BankTile extends StatefulWidget {
+ const BankTile({required this.cardModel, Key? key}) : super(key: key);
 
   final CardData cardModel;
 
+  @override
+  State<BankTile> createState() => _BankTileState();
+}
+
+class _BankTileState extends State<BankTile> {
   //this variable is used to control the delete dialog that pops up
   bool _isDeleted = false;
 
 //this is the datbase from drift also called moor
   late AppDatabase database;
+
   @override
   Widget build(BuildContext context) {
     //this initializes thet database using provider
-    database = Provider.of<AppDatabase>(context);
+    database = Provider.of<AppDatabase>(context); 
     return ClipRRect(
       borderRadius: BorderRadius.circular(16.r),
       child: Slidable(
@@ -58,7 +64,7 @@ class BankTile extends StatelessWidget {
                             ]));
 
                 //if the user clicks yes on the dialog the card will delete if not, it wont delete
-                _isDeleted ? database.deleteCard(cardModel) : null;
+                _isDeleted ? database.deleteCard(widget.cardModel) : null;
               },
               backgroundColor: Colors.red,
               icon: Iconsax.trash,
@@ -83,7 +89,7 @@ class BankTile extends StatelessWidget {
         //reduce inner padding of listtile to 0
         contentPadding: EdgeInsets.zero,
         title: Text(
-          cardModel.bankName,
+          widget.cardModel.bankName,
           style:  TextStyle(
               fontFamily: 'SF-Pro',
               fontSize: 14.sp,
@@ -92,7 +98,7 @@ class BankTile extends StatelessWidget {
         ),
         //create subtitle with cardModel.cardNumber that hides the first 4 digits of the number
         subtitle: Text(
-          cardModel.cardNumber.replaceRange(0, 4, '****'),
+          widget.cardModel.cardNumber.replaceRange(0, 4, '****'),
           style: TextStyle(
               fontFamily: 'SF-Pro',
               fontSize: 14.sp,
@@ -100,7 +106,7 @@ class BankTile extends StatelessWidget {
               color:const  Color(0xffB5B3C5)),
         ),
 
-        trailing: SvgPicture.asset('assets/${cardModel.cardType}card.svg',),
+        trailing: SvgPicture.asset('assets/${widget.cardModel.cardType}card.svg',),
       ),
     );
   }

@@ -22,7 +22,7 @@ class DummyCardWidget extends StatelessWidget {
         Positioned(
             top: 38.h,
             left: 24.w,
-            child: Container(
+            child: SizedBox(
               width: 216.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

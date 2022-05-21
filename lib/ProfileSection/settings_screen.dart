@@ -7,7 +7,6 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iconsax/iconsax.dart';
@@ -90,8 +89,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           .showSnackBar(const SnackBar(content: Text('No data to import')));
     }
 
-    print(loadedCsv);
-
     return loadedCsv;
   }
 
@@ -126,7 +123,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Directory directory = (await getExternalStorageDirectory())!;
     String fileName = 'cards.csv';
     String newPath = '';
-    print('directory: $directory');
 
     List<String> paths = directory.path.split('/');
 
@@ -140,7 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
 
     newPath = newPath + '/OneWallet';
-    print('New Path : $newPath');
+
     directory = Directory(newPath);
     if (!await directory.exists()) {
       await directory.create(recursive: true);
@@ -156,10 +152,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
-    
+
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context)=> LoginScreen()), (Route<dynamic> route) => false);
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+        (Route<dynamic> route) => false);
   }
+
   @override
   Widget build(BuildContext context) {
     database = Provider.of<AppDatabase>(context);
@@ -423,7 +421,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: const Color(0xff0B0B0B),
                         ),
                       ),
-                      
                     ),
                   ),
                 ],

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_wallet/database/database.dart';
-import 'package:one_wallet/models/card_model.dart';
-import 'package:one_wallet/provider/wallet_provider.dart';
 import 'package:one_wallet/widgets/dummy_card_widget.dart';
 import 'package:provider/provider.dart';
 

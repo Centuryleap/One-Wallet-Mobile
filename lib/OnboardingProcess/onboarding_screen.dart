@@ -1,4 +1,4 @@
-//  prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,7 +32,7 @@ class OnboardingScreen extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.centerRight,
-              child: Image.asset('assets/onboarding_card.png', width: 337, height:372.h),
+              child: Image.asset('assets/onboarding_card.png', width:337.w, height:372.h),
             ),
            SizedBox(
               height: 66.h,
@@ -44,7 +44,7 @@ class OnboardingScreen extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontFamily: 'SF-Pro',
-                    fontSize: 28.sp,
+                    fontSize: 28.sp, 
                     color: Colors.white),
               ),
             ),
@@ -54,7 +54,7 @@ class OnboardingScreen extends StatelessWidget {
             Padding(
               padding:  EdgeInsets.symmetric(horizontal: 24.w),
               //this text was wrapped by container for automatic allignment
-              child: Container(
+              child: SizedBox(
                 child:  Text(                                                                                                                                                                                              
                   'Hold and manage all your card information safely, on one platform.',
                   textAlign: TextAlign.start,

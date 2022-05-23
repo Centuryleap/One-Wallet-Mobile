@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_wallet/views/CardDetailsSection/card_detail.dart';
-import 'package:one_wallet/database/database.dart';
+import 'package:one_wallet/app/database/database.dart';
 import 'package:one_wallet/views/widgets/bank_tile_widget.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:local_auth/local_auth.dart';

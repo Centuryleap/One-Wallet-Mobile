@@ -17,7 +17,7 @@ class CardExpirationFormatter extends TextInputFormatter {
         valueToReturn += '/';
       }
     }
-    return newValue.copyWith(
+    return newValue.copyWith(           
       text: valueToReturn,
       selection: TextSelection.fromPosition(
         TextPosition(offset: valueToReturn.length),

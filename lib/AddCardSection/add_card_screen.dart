@@ -40,15 +40,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
   late AppDatabase database;
 
-  static const menuItems = <String>['master', 'verve', 'visa'];
-
-  final List<DropdownMenuItem<String>> _dropdownMenuItems = menuItems
-      .map((value) => DropdownMenuItem<String>(
-            value: value,
-            child: Text(value + 'card'),
-          ))
-      .toList();
-
   @override
   void dispose() {
     //dispose all controllers
@@ -146,7 +137,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       filled: true,
                       hintText: 'Card Holder name',
                       hintStyle: TextStyle(
-                          color:    const Color(0xffAAA8BD),
+                          color: const Color(0xffAAA8BD),
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400),
                       fillColor: const Color(0xffFAFBFF),
@@ -225,7 +216,10 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
-                  inputFormatters: [LengthLimitingTextInputFormatter(5), CardExpirationFormatter()],
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(5),
+                    CardExpirationFormatter()
+                  ],
                   validator: (text) {
                     if (text!.isEmpty) {
                       return 'Please enter expiry date';
@@ -266,7 +260,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           borderRadius: BorderRadius.circular(16))),
                 ),
                 SizedBox(height: 16.h),
-               
+
                 SizedBox(
                   height: 36.h,
                 ),
@@ -290,7 +284,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       } else if (cardNumberController.text.startsWith('5') &&
                           !cardNumberController.text.startsWith('5061')) {
                         cardType = 'master';
-                      } 
+                      }
 
                       database.insertCard(CardCompanion(
                         bankName: dr.Value(bankName),

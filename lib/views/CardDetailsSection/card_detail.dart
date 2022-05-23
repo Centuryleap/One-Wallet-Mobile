@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_wallet/views/CardDetailsSection/edit_card_screen.dart';
-import 'package:one_wallet/database/database.dart';
+import 'package:one_wallet/app/database/database.dart';
 import 'package:one_wallet/views/widgets/dummy_card_widget.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_svg/flutter_svg.dart';

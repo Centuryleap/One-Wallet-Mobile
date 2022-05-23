@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:one_wallet/views/OnboardingProcess/splash_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:one_wallet/database/database.dart';
+import 'package:one_wallet/app/database/database.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

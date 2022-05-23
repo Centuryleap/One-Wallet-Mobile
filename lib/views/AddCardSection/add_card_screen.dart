@@ -7,7 +7,7 @@ import 'package:one_wallet/views/widgets/dummy_card_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:drift/drift.dart' as dr;
 
-import 'package:one_wallet/database/database.dart';
+import 'package:one_wallet/app/database/database.dart';
 
 class AddCardScreen extends StatefulWidget {
   const AddCardScreen({Key? key}) : super(key: key);

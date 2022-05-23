@@ -27,7 +27,6 @@ class _BankListWidgetState extends State<BankListWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _checkBiometrics();
     _getAvailableBiometrics();
     getRealPreferences();

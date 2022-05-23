@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:one_wallet/OnboardingProcess/splash_screen.dart';
+import 'package:one_wallet/views/OnboardingProcess/splash_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:one_wallet/database/database.dart';
 import 'package:provider/provider.dart';

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_wallet/database/database.dart';
-import 'package:one_wallet/widgets/dummy_card_widget.dart';
+import 'package:one_wallet/views/widgets/dummy_card_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../helpers/card_expiration_formatter.dart';
+import 'package:one_wallet/helpers/card_expiration_formatter.dart';
 
 class EditCardScreen extends StatefulWidget {
   const EditCardScreen({required this.cardModel, Key? key}) : super(key: key);

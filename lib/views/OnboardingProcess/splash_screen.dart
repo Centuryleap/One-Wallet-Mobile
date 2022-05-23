@@ -4,9 +4,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:one_wallet/HomeSection/bottom_navigation.dart';
+import 'package:one_wallet/views/HomeSection/bottom_navigation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:one_wallet/OnboardingProcess/onboarding_screen.dart';
+import 'package:one_wallet/views/OnboardingProcess/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

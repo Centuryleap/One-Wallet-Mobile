@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_wallet/helpers/card_expiration_formatter.dart';
-import 'package:one_wallet/widgets/dummy_card_widget.dart';
+import 'package:one_wallet/views/widgets/dummy_card_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:drift/drift.dart' as dr;
 
-import '../database/database.dart';
+import 'package:one_wallet/database/database.dart';
 
 class AddCardScreen extends StatefulWidget {
   const AddCardScreen({Key? key}) : super(key: key);

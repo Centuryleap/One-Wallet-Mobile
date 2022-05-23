@@ -11,7 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:one_wallet/OnboardingProcess/log_in_screen.dart';
+import 'package:one_wallet/views/OnboardingProcess/log_in_screen.dart';
 import 'package:one_wallet/database/database.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';

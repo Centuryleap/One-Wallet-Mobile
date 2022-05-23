@@ -6,10 +6,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:one_wallet/HomeSection/bottom_navigation.dart';
-import 'package:one_wallet/OnboardingProcess/sign_up_screen.dart';
+import 'package:one_wallet/views/HomeSection/bottom_navigation.dart';
+import 'package:one_wallet/views/OnboardingProcess/sign_up_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:one_wallet/ProfileSection/update_username.dart';
+import 'package:one_wallet/views/ProfileSection/update_username.dart';
 
 import 'sign_up_screen.dart';
 

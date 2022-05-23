@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:one_wallet/OnboardingProcess/sign_up_screen.dart';
+import 'package:one_wallet/views/OnboardingProcess/sign_up_screen.dart';
 
 import 'log_in_screen.dart';
 

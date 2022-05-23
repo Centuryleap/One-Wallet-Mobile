@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:one_wallet/AddCardSection/add_card_screen.dart';
-import 'package:one_wallet/HomeSection/my_cards_screen.dart';
+import 'package:one_wallet/views/AddCardSection/add_card_screen.dart';
+import 'package:one_wallet/views/HomeSection/my_cards_screen.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:one_wallet/ProfileSection/settings_screen.dart';
+import 'package:one_wallet/views/ProfileSection/settings_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

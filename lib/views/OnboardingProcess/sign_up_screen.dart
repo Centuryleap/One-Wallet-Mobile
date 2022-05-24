@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:one_wallet/app/utils/utils.dart';
 
 import 'package:one_wallet/views/OnboardingProcess/log_in_screen.dart';
 
@@ -181,25 +182,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             loading = false;
                           });
                           if (e.code == 'weak-password') {
-                            ScaffoldMessenger.of(_formKey.currentState!.context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('Password is too weak'),
-                            ));
+                            Utils.scaffoldMessengerSnackBar(_formKey.currentState!.context, 'Password is too weak');
                           } else if (e.code == 'email-already-in-use') {
-                            ScaffoldMessenger.of(_formKey.currentState!.context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('Email already in use'),
-                            ));
+                            Utils.scaffoldMessengerSnackBar(_formKey.currentState!.context, 'Email already in use');
                           } else if (e.code == 'network-request-failed') {
-                            ScaffoldMessenger.of(_formKey.currentState!.context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('There was a network error'),
-                            ));
+                            Utils.scaffoldMessengerSnackBar(_formKey.currentState!.context, 'There was a networl error');
                           } else {
-                            ScaffoldMessenger.of(_formKey.currentState!.context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('Something went wrong'),
-                            ));
+                            Utils.scaffoldMessengerSnackBar(_formKey.currentState!.context, 'Something went wrong');
                           }
                         }
                       }

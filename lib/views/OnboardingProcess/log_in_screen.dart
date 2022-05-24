@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:one_wallet/app/utils/utils.dart';
 import 'package:one_wallet/views/HomeSection/bottom_navigation.dart';
 import 'package:one_wallet/views/OnboardingProcess/sign_up_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -195,30 +196,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             loading = false;
                           });
                           if (e.code == 'invalid-email') {
-                            ScaffoldMessenger.of(formKey.currentState!.context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('Please enter valid email'),
-                            ));
+                            Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'Invalid Email');
                           } else if (e.code == 'user-disabled') {
-                            ScaffoldMessenger.of(formKey.currentState!.context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('User disabled'),
-                            ));
+                            Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'User Disabled');
                           } else if (e.code == 'wrong-password') {
-                            ScaffoldMessenger.of(formKey.currentState!.context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('Wrong Password entered'),
-                            ));
+                            Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'Wrong Password Entered');
                           } else if (e.code == 'user-not-found') {
-                            ScaffoldMessenger.of(formKey.currentState!.context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('User not found'),
-                            ));
+                           Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'User not found');
                           } else {
-                            ScaffoldMessenger.of(formKey.currentState!.context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('User disabled'),
-                            ));
+                           Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'User Disabled');
                           }
                         }
                       }
@@ -376,17 +362,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       email:
                                           _forgotPasswordEmailController.text);
                               Navigator.of(context).pop();
-                              ScaffoldMessenger.of(
-                                      formKey.currentState!.context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text('Email sent'),
-                              ));
+                             Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'Email Sent');
                             } on FirebaseAuthException catch (e) {
-                              ScaffoldMessenger.of(
-                                      formKey.currentState!.context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(e.code),
-                              ));
+                             Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, e.code);
                             }
                           }
                         },

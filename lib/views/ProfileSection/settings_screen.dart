@@ -11,16 +11,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:one_wallet/views/OnboardingProcess/log_in_screen.dart';
+import 'package:one_wallet/core/Firebase/firebase_api.dart';
+import 'package:one_wallet/core/csv_logic.dart';
 import 'package:one_wallet/app/database/database.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'change_password_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io';
-import 'package:csv/csv.dart';
-import 'package:drift/drift.dart' as dr;
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -32,14 +28,11 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   final _prefs = SharedPreferences.getInstance();
   bool _toggled = false;
-
   final currentUser = FirebaseAuth.instance.currentUser;
-
   late AppDatabase database;
 
   @override
   void initState() {
-
     getRealPreferences();
     super.initState();
   }
@@ -50,110 +43,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       _toggled = prefs.getBool('fingerprintAllowed') ?? false;
     });
-  }
-
-  List<List<dynamic>> loadedCsv = [];
-  Future<List<List<dynamic>>> _loadCSV() async {
-    String path = '/storage/emulated/0/OneWallet/cards.csv';
-
-    final newFile = File(path);
-
-    if (await newFile.exists()) {
-      final file = newFile.openRead();
-
-      loadedCsv = await file
-          .transform(utf8.decoder)
-          .transform(const CsvToListConverter())
-          .toList();
-      if (loadedCsv.length > 1) {
-        for (var i = 1; i < loadedCsv.length; i++) {
-          database.insertCard(CardCompanion(
-            bankName: dr.Value(loadedCsv[i][1].toString()),
-            cardNumber: dr.Value(loadedCsv[i][2].toString()),
-            expiryDate: dr.Value(loadedCsv[i][3].toString()),
-            cardHolderName: dr.Value(loadedCsv[i][4].toString()),
-            cvvCode: dr.Value(loadedCsv[i][5].toString()),
-            cardType: dr.Value(loadedCsv[i][6].toString()),
-          ));
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Data imported successfully')));
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('No data to import')));
-      }
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('No data to import')));
-    }
-
-    return loadedCsv;
-  }
-
-  Future<void> _generateCSV(BuildContext context) async {
-    AppDatabase database = Provider.of<AppDatabase>(context, listen: false);
-    List<CardData> cards = await database.allCards;
-    List<List<String>> csvData = [
-      [
-        'id',
-        'Bank Name',
-        'Card Number',
-        'Expiry Date',
-        'Card Holder Name',
-        'CVV code',
-        'Card Type'
-      ],
-      ...cards.map((item) => [
-            item.id.toString(),
-            item.bankName,
-            item.cardNumber,
-            item.expiryDate,
-            item.cardHolderName,
-            item.cvvCode,
-            item.cardType ?? 'Unknown'
-          ]),
-    ];
-
-    String csv = const ListToCsvConverter().convert(csvData);
-
-    await Permission.manageExternalStorage.request();
-
-    Directory directory = (await getExternalStorageDirectory())!;
-    String fileName = 'cards.csv';
-    String newPath = '';
-
-    List<String> paths = directory.path.split('/');
-
-    for (var i = 1; i < paths.length; i++) {
-      String currentFolder = paths[i];
-      if (currentFolder != 'Android') {
-        newPath += '/' + currentFolder;
-      } else {
-        break;
-      }
-    }
-
-    newPath = newPath + '/OneWallet';
-
-    directory = Directory(newPath);
-    if (!await directory.exists()) {
-      await directory.create(recursive: true);
-    }
-    if (await directory.exists()) {
-      final File file = File(directory.path + '/$fileName');
-      await file.writeAsString(csv).then((value) =>
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text(
-                  'Data exported successfully to storage/emulated/0/OneWallet/cards.csv'))));
-    }
-  }
-
-  Future<void> _signOut() async {
-    await FirebaseAuth.instance.signOut();
-
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-        (Route<dynamic> route) => false);
   }
 
   @override
@@ -334,7 +223,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 15.h),
                   GestureDetector(
-                    onTap: () => _loadCSV(),
+                    onTap: () => CsvLogic.loadCSV(context),
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: CircleAvatar(
@@ -367,7 +256,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 15.h),
                   GestureDetector(
-                    onTap: () => _generateCSV(context),
+                    onTap: () => CsvLogic.generateCSV(context),
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: CircleAvatar(
@@ -400,7 +289,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 15.h),
                   GestureDetector(
-                    onTap: () => _signOut(),
+                    onTap: () => FirebaseApi.signOut(context),
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: CircleAvatar(

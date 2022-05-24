@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 //import firebase auth package
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:one_wallet/app/utils/utils.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
@@ -190,16 +191,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         await user.reauthenticateWithCredential(cred);
         try {
           await user.updatePassword(newPassword).then((value) =>
-              ScaffoldMessenger.of(formKey.currentState!.context).showSnackBar(
-                  const SnackBar(content: Text('Password Updated'))));
+              Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'Password Updated'));
           Navigator.pop(context);
         } on FirebaseAuthException catch (e) {
-          ScaffoldMessenger.of(formKey.currentState!.context)
-              .showSnackBar(SnackBar(content: Text(e.code)));
+          Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, e.code);
         }
       } on FirebaseAuthException catch (e) {
-        ScaffoldMessenger.of(formKey.currentState!.context)
-            .showSnackBar(SnackBar(content: Text(e.code)));
+        Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, e.code);
       }
     }
   }

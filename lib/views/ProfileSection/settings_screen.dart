@@ -1,8 +1,3 @@
-//  prefer_const_literals_to_create_immutables, use_full_hex_values_for_flutter_colors
-
-// ignore_for_file: prefer_const_constructors
-
-import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:one_wallet/app/utils/utils.dart';
 import 'package:one_wallet/views/CardDetailsSection/edit_card_screen.dart';
 import 'package:one_wallet/app/database/database.dart';
 import 'package:one_wallet/views/widgets/dummy_card_widget.dart';
@@ -57,12 +58,7 @@ class _CardDetailsState extends State<CardDetails> {
                   Clipboard.setData(
                           ClipboardData(text: widget.cardModel.cardNumber))
                       .then((value) =>
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Card number copied to clipboard'),
-                              duration: Duration(seconds: 2),
-                            ),
-                          ));
+                          Utils.scaffoldMessengerSnackBar(context, 'Card number copied to clipboard'));
                 },
                 child: ListTile(
                   contentPadding: const EdgeInsets.only(left: 20),

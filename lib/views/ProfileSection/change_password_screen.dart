@@ -2,10 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import firebase auth package
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:one_wallet/app/utils/utils.dart';
+import 'package:one_wallet/core/Firebase/firebase_api.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
@@ -30,10 +28,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             padding: EdgeInsets.symmetric(
               horizontal: 24.w,
             ),
-            child:
-
-                /// A unique identifier for the form.
-                Form(
+            child: Form(
               key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +144,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   MaterialButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        _changePassword(oldPasswordController.text,
+                        FirebaseApi.changePassword(
+                            formKey.currentState!.context,
+                            oldPasswordController.text,
                             confirmPasswordController.text);
                       }
                     },
@@ -181,24 +178,5 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   /// Args:
   ///   currentPassword (String): The user's current password.
   ///   newPassword (String): The new password.
-  void _changePassword(String currentPassword, String newPassword) async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final cred = EmailAuthProvider.credential(
-          email: user.email!, password: currentPassword);
 
-      try {
-        await user.reauthenticateWithCredential(cred);
-        try {
-          await user.updatePassword(newPassword).then((value) =>
-              Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'Password Updated'));
-          Navigator.pop(context);
-        } on FirebaseAuthException catch (e) {
-          Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, e.code);
-        }
-      } on FirebaseAuthException catch (e) {
-        Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, e.code);
-      }
-    }
-  }
 }

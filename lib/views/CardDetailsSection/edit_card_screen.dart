@@ -21,7 +21,6 @@ class _EditCardScreenState extends State<EditCardScreen> {
 
   late String previousCardNumber = widget.cardModel.bankName;
 
-
   //this variables are controllers attached to Form Fields to monitor them
   late TextEditingController bankNameController;
   late TextEditingController cardNumberController;
@@ -148,7 +147,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                   autovalidateMode: _submitted
                       ? AutovalidateMode.onUserInteraction
                       : AutovalidateMode.disabled,
-                  inputFormatters: [LengthLimitingTextInputFormatter(15)],
+                  inputFormatters: [LengthLimitingTextInputFormatter(30)],
                   decoration: InputDecoration(
                       filled: true,
                       hintText: 'Card Holder name',
@@ -291,7 +290,6 @@ class _EditCardScreenState extends State<EditCardScreen> {
                       cvvCode = cvvController.text;
                       expiryDate = expiryDateController.text;
 
-                      
                       if (cardNumberController.text.startsWith('4')) {
                         cardType = 'visa';
                       } else if (cardNumberController.text.startsWith('5061')) {

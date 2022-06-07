@@ -230,17 +230,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     if (!text.contains('/')) {
                       return 'Please input expiry date in format MM/YY';
                     }
-                    if (!text.startsWith('01') ||
-                        !text.startsWith('02') ||
-                        !text.startsWith('03') ||
-                        !text.startsWith('04') ||
-                        !text.startsWith('05') ||
-                        !text.startsWith('06') ||
-                        !text.startsWith('07') ||
-                        !text.startsWith('08') ||
-                        !text.startsWith('09') ||
-                        !text.startsWith('10') ||
-                        !text.startsWith('11') ||
+                    if (!text.startsWith('01') &&
+                        !text.startsWith('02') &&
+                        !text.startsWith('03') &&
+                        !text.startsWith('04') &&
+                        !text.startsWith('05') &&
+                        !text.startsWith('06') &&
+                        !text.startsWith('07') &&
+                        !text.startsWith('08') &&
+                        !text.startsWith('09') &&
+                        !text.startsWith('10') &&
+                        !text.startsWith('11') &&
                         !text.startsWith('12')) {
                       return 'Please enter valid month';
                     }

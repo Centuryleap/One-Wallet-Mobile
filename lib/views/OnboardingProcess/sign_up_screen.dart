@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:one_wallet/app/utils/utils.dart';
 
 import 'package:one_wallet/views/OnboardingProcess/log_in_screen.dart';
@@ -26,6 +27,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   //this boolean is used to check if the user has clicked on the sign up button and know wether to show CircularProgressIndicator or not
   bool loading = false;
+
+  bool _obscureText = true;
+    bool _obscureConfirmPasswordText = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,8 +113,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       }
                       return null;
                     },
-                    obscureText: true,
+                    obscureText: _obscureText,
                     decoration: InputDecoration(
+                      suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            child: Icon(
+                                _obscureText ? Iconsax.eye_slash : Iconsax.eye,
+                                size: 16.sp,color: const Color(0xff292D32))),
                         filled: true,
                         hintText: 'Enter Password',
                         hintStyle: TextStyle(
@@ -140,8 +153,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       }
                       return null;
                     },
-                    obscureText: true,
+                    obscureText: _obscureConfirmPasswordText,
                     decoration: InputDecoration(
+                       suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _obscureConfirmPasswordText = !_obscureConfirmPasswordText;
+                    });
+                  },
+                  child: Icon(_obscureConfirmPasswordText ? Iconsax.eye_slash : Iconsax.eye,
+                      size: 16.sp, color: const Color(0xff292D32)),
+                ),
                         filled: true,
                         hintText: 'Confirm Password',
                         hintStyle: TextStyle(

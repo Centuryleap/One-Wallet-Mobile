@@ -1,11 +1,10 @@
-
-
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:one_wallet/app/utils/utils.dart';
 import 'package:one_wallet/views/HomeSection/bottom_navigation.dart';
 import 'package:one_wallet/views/OnboardingProcess/sign_up_screen.dart';
@@ -35,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //this boolean is used to check if the user has clicked on the sign up button and know wether to show CircularProgressIndicator or not
   bool loading = false;
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.only(top: 86.h, left: 24.w, right: 24.w),
+          padding: EdgeInsets.only(top: 86.h, left: 24.w, right: 24.w),
           child: Form(
             key: formKey,
             child: Container(
@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 56.w,
                     height: 56.h,
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 40.h,
                   ),
                   Text(
@@ -77,10 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'SF-Pro',
-                      color:const Color(0xff505780),
+                      color: const Color(0xff505780),
                     ),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 56.h,
                   ),
                   TextFormField(
@@ -98,12 +98,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(
                         filled: true,
                         hintText: 'Email Address',
-                        hintStyle:  TextStyle(
-                            color:const Color(0xffAAA8BD),
+                        hintStyle: TextStyle(
+                            color: const Color(0xffAAA8BD),
                             fontSize: 14.sp,
                             fontFamily: 'SF-Pro',
                             fontWeight: FontWeight.w400),
-                        floatingLabelStyle: const TextStyle(color: Color(0xff02003D)),
+                        floatingLabelStyle:
+                            const TextStyle(color: Color(0xff02003D)),
                         fillColor: const Color(0xffFAFBFF),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -121,16 +122,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                     keyboardType: TextInputType.text,
-                    obscureText: true,
+                    obscureText: _obscureText,
                     decoration: InputDecoration(
+                        suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            child: Icon(
+                                _obscureText ? Iconsax.eye_slash : Iconsax.eye,
+                                size: 16.sp)),
                         filled: true,
                         hintText: 'Enter password',
-                        hintStyle:  TextStyle(
-                            color:const Color(0xffAAA8BD),
+                        hintStyle: TextStyle(
+                            color: const Color(0xffAAA8BD),
                             fontSize: 14.sp,
                             fontFamily: 'SF-Pro',
                             fontWeight: FontWeight.w400),
-                        floatingLabelStyle: const TextStyle(color: Color(0xff02003D)),
+                        floatingLabelStyle:
+                            const TextStyle(color: Color(0xff02003D)),
                         fillColor: const Color(0xffFAFBFF),
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -144,10 +155,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       GestureDetector(
                         onTap: () => _showSheet(context),
-                        child:  Text(
+                        child: Text(
                           'Forgot password',
                           style: TextStyle(
-                            color:const Color(0xff5F00F8),
+                            color: const Color(0xff5F00F8),
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w500,
                           ),
@@ -185,7 +196,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             } else {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => const UpdateUsernameScreen(),
+                                  builder: (context) =>
+                                      const UpdateUsernameScreen(),
                                 ),
                               );
                             }
@@ -196,15 +208,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             loading = false;
                           });
                           if (e.code == 'invalid-email') {
-                            Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'Invalid Email');
+                            Utils.scaffoldMessengerSnackBar(
+                                formKey.currentState!.context, 'Invalid Email');
                           } else if (e.code == 'user-disabled') {
-                            Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'User Disabled');
+                            Utils.scaffoldMessengerSnackBar(
+                                formKey.currentState!.context, 'User Disabled');
                           } else if (e.code == 'wrong-password') {
-                            Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'Wrong Password Entered');
+                            Utils.scaffoldMessengerSnackBar(
+                                formKey.currentState!.context,
+                                'Wrong Password Entered');
                           } else if (e.code == 'user-not-found') {
-                           Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'User not found');
+                            Utils.scaffoldMessengerSnackBar(
+                                formKey.currentState!.context,
+                                'User not found');
                           } else {
-                           Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'User Disabled');
+                            Utils.scaffoldMessengerSnackBar(
+                                formKey.currentState!.context, 'User Disabled');
                           }
                         }
                       }
@@ -214,12 +233,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24.r),
                     ),
-                    padding:  EdgeInsets.symmetric(vertical: 18.h),
+                    padding: EdgeInsets.symmetric(vertical: 18.h),
                     child: loading
-                        ?  SizedBox(
+                        ? SizedBox(
                             height: 11.h,
                             width: 11.w,
-                            child:const CircularProgressIndicator(
+                            child: const CircularProgressIndicator(
                               color: Colors.white,
                               strokeWidth: 2,
                             ))
@@ -237,16 +256,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   RichText(
                     text: TextSpan(
                       text: 'New to Onewallet? ',
-                      style:  TextStyle(
-                        color:const Color(0xffAAA8BD),
+                      style: TextStyle(
+                        color: const Color(0xffAAA8BD),
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                       ),
                       children: [
                         TextSpan(
                             text: 'Create account',
-                            style:  TextStyle(
-                              color:const Color(0xff5F00F8),
+                            style: TextStyle(
+                              color: const Color(0xff5F00F8),
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
                             ),
@@ -254,7 +273,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               ..onTap = () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                      builder: (builder) => const SignUpScreen()),
+                                      builder: (builder) =>
+                                          const SignUpScreen()),
                                 );
                               }),
                       ],
@@ -282,7 +302,7 @@ class _LoginScreenState extends State<LoginScreen> {
             topRight: Radius.circular(32.r),
           ),
           child: Container(
-            decoration:  BoxDecoration(
+            decoration: BoxDecoration(
               color: const Color(0xFFFFFFFF),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(32.r),
@@ -293,7 +313,7 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: controller,
               children: [
                 Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 24.h),
+                  padding: EdgeInsets.symmetric(horizontal: 24.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -304,19 +324,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 32.h,
                       ),
-                       Text(
+                      Text(
                         'Forgot password',
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          color:const Color(0xff0B0B0B),
+                          color: const Color(0xff0B0B0B),
                           fontSize: 24.sp,
                         ),
                       ),
                       SizedBox(height: 6.h),
-                       Text(
+                      Text(
                         'Enter email attached to your account',
                         style: TextStyle(
-                            color:const Color(0xff505780),
+                            color: const Color(0xff505780),
                             fontWeight: FontWeight.w400,
                             fontFamily: 'Gotham',
                             fontSize: 14.sp),
@@ -335,7 +355,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               filled: true,
                               labelText: 'Email Address',
                               labelStyle: TextStyle(
-                                  color: const Color(0xffAAA8BD), fontSize: 14.sp,),
+                                color: const Color(0xffAAA8BD),
+                                fontSize: 14.sp,
+                              ),
                               floatingLabelStyle:
                                   const TextStyle(color: Color(0xff02003D)),
                               fillColor: const Color(0xffFAFBFF),
@@ -362,9 +384,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       email:
                                           _forgotPasswordEmailController.text);
                               Navigator.of(context).pop();
-                             Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, 'Email Sent');
+                              Utils.scaffoldMessengerSnackBar(
+                                  formKey.currentState!.context, 'Email Sent');
                             } on FirebaseAuthException catch (e) {
-                             Utils.scaffoldMessengerSnackBar(formKey.currentState!.context, e.code);
+                              Utils.scaffoldMessengerSnackBar(
+                                  formKey.currentState!.context, e.code);
                             }
                           }
                         },
@@ -373,8 +397,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24.r),
                         ),
-                        padding:  EdgeInsets.symmetric(vertical: 20.h),
-                        child:  Text(
+                        padding: EdgeInsets.symmetric(vertical: 20.h),
+                        child: Text(
                           'Continue',
                           style: TextStyle(
                               color: Colors.white,

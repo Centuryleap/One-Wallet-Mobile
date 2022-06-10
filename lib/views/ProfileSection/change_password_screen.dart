@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:one_wallet/core/Firebase/firebase_api.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -18,6 +19,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   TextEditingController oldPasswordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
+
+  bool _obscureOldPasswordText = true;
+  bool _obscureNewPasswordText = true;
+  bool _obscureConfirmPasswordText = true;
+
+    bool loadingCircular = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +81,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       return null;
                     },
                     keyboardType: TextInputType.text,
-                    obscureText: true,
+                    obscureText: _obscureOldPasswordText,
                     decoration: InputDecoration(
+                        suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _obscureOldPasswordText =
+                                    !_obscureOldPasswordText;
+                              });
+                            },
+                            child: Icon(
+                                _obscureOldPasswordText
+                                    ? Iconsax.eye_slash
+                                    : Iconsax.eye,
+                                size: 16.sp)),
                         filled: true,
                         hintText: 'Enter old password',
                         hintStyle: TextStyle(
@@ -97,8 +118,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       return null;
                     },
                     keyboardType: TextInputType.text,
-                    obscureText: true,
+                    obscureText: _obscureNewPasswordText,
                     decoration: InputDecoration(
+                        suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _obscureNewPasswordText =
+                                    !_obscureNewPasswordText;
+                              });
+                            },
+                            child: Icon(
+                                _obscureNewPasswordText
+                                    ? Iconsax.eye_slash
+                                    : Iconsax.eye,
+                                size: 16.sp)),
                         filled: true,
                         hintText: 'Enter new password',
                         hintStyle: TextStyle(
@@ -125,8 +158,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       return null;
                     },
                     keyboardType: TextInputType.text,
-                    obscureText: true,
+                    obscureText: _obscureConfirmPasswordText,
                     decoration: InputDecoration(
+                        suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _obscureConfirmPasswordText =
+                                    !_obscureConfirmPasswordText;
+                              });
+                            },
+                            child: Icon(
+                                _obscureConfirmPasswordText
+                                    ? Iconsax.eye_slash
+                                    : Iconsax.eye,
+                                size: 16.sp)),
                         filled: true,
                         hintText: 'Confirm new password',
                         hintStyle: TextStyle(
@@ -142,13 +187,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     height: 56.h,
                   ),
                   MaterialButton(
-                    onPressed: () {
+                    onPressed: () async  {
+                      setState(() {
+                        loadingCircular = true;
+                        print('true');
+                      });
                       if (formKey.currentState!.validate()) {
-                        FirebaseApi.changePassword(
+                        await FirebaseApi.changePassword(
                             formKey.currentState!.context,
                             oldPasswordController.text,
                             confirmPasswordController.text);
                       }
+                      setState(() {
+                        loadingCircular = false;
+                        print('false');
+                      });
                     },
                     color: const Color(0xff02003D),
                     minWidth: double.infinity,
@@ -156,14 +209,22 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       borderRadius: BorderRadius.circular(24),
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 18),
-                    child: Text(
-                      'Change password',
-                      style: TextStyle(
-                          fontFamily: 'SF-Pro',
-                          color: Colors.white,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500),
-                    ),
+                    child: loadingCircular
+                        ? SizedBox(
+                            height: 11.h,
+                            width: 11.w,
+                            child: const CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ))
+                        : Text(
+                            'Change password',
+                            style: TextStyle(
+                                fontFamily: 'SF-Pro',
+                                color: Colors.white,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500),
+                          ),
                   ),
                 ],
               ),
@@ -173,7 +234,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }
 
   /// _changePassword() takes two strings, the current password and the new password, and then changes
-  /// the password of the current user to the new password
+  /// the password of the current user to the new password   
   ///
   /// Args:
   ///   currentPassword (String): The user's current password.

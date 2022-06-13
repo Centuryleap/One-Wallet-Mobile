@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:one_wallet/app/utils/utils.dart';
 
 import 'package:one_wallet/views/OnboardingProcess/log_in_screen.dart';
@@ -29,251 +30,285 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool loading = false;
 
   bool _obscureText = true;
-    bool _obscureConfirmPasswordText = true;
+  bool _obscureConfirmPasswordText = true;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(top: 86.h, left: 24.w, right: 24.w),
-          child: Form(
-            key: _formKey,
-            child: Container(
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  SvgPicture.asset(
-                    'assets/one_wallet_logo.svg',
-                    width: 56.w,
-                    height: 56.h,
-                  ),
-                  SizedBox(
-                    height: 40.h,
-                  ),
-                  Text(
-                    'Create account',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'SF-Pro',
-                        fontSize: 24.sp,
-                        color: Colors.black),
-                  ),
-                  SizedBox(height: 6.h),
-                  Text(
-                    'Sign up with the provided \nmeans to continue',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      height: 1.6,
-                      fontFamily: 'SF-Pro',
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xff505780),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 56.h,
-                  ),
-                  TextFormField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter email';
-                      }
-                      if (!value.contains('@')) {
-                        return 'Please enter valid email';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                        filled: true,
-                        hintText: 'Email Address',
-                        hintStyle: TextStyle(
-                            color: const Color(0xffAAA8BD),
-                            fontSize: 14.sp,
-                            fontFamily: 'SF-Pro',
-                            fontWeight: FontWeight.w400),
-                        floatingLabelStyle:
-                            const TextStyle(color: Color(0xff02003D)),
-                        fillColor: const Color(0xffFAFBFF),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(16.r))),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  TextFormField(
-                    controller: _passwordController,
-                    keyboardType: TextInputType.text,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter password';
-                      }
-                      return null;
-                    },
-                    obscureText: _obscureText,
-                    decoration: InputDecoration(
-                      suffixIcon: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                            child: Icon(
-                                _obscureText ? Iconsax.eye_slash : Iconsax.eye,
-                                size: 16.sp,color: const Color(0xff292D32))),
-                        filled: true,
-                        hintText: 'Enter Password',
-                        hintStyle: TextStyle(
-                            color: const Color(0xffAAA8BD),
-                            fontSize: 14.sp,
-                            fontFamily: 'SF-Pro',
-                            fontWeight: FontWeight.w400),
-                        floatingLabelStyle:
-                            const TextStyle(color: Color(0xff02003D)),
-                        fillColor: const Color(0xffFAFBFF),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(16))),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  TextFormField(
-                    controller: _confirmPasswordController,
-                    keyboardType: TextInputType.text,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please confirm your password';
-                      }
-                      if (value != _passwordController.text) {
-                        return 'Passwords do not match';
-                      }
-                      return null;
-                    },
-                    obscureText: _obscureConfirmPasswordText,
-                    decoration: InputDecoration(
-                       suffixIcon: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _obscureConfirmPasswordText = !_obscureConfirmPasswordText;
-                    });
-                  },
-                  child: Icon(_obscureConfirmPasswordText ? Iconsax.eye_slash : Iconsax.eye,
-                      size: 16.sp, color: const Color(0xff292D32)),
-                ),
-                        filled: true,
-                        hintText: 'Confirm Password',
-                        hintStyle: TextStyle(
-                            color: const Color(0xffAAA8BD),
-                            fontSize: 14.sp,
-                            fontFamily: 'SF-Pro',
-                            fontWeight: FontWeight.w400),
-                        floatingLabelStyle:
-                            const TextStyle(color: Color(0xff02003D)),
-                        fillColor: const Color(0xffFAFBFF),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(16))),
-                  ),
-                  SizedBox(
-                    height: 40.h,
-                  ),
-                  MaterialButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        try {
-                          //when this button is pressed the loading variable is set to true and the CircularProgressIndicator is shown
-                          setState(() {
-                            loading = true;
-                          });
-                          await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                                  email: _emailController.text,
-                                  password: _passwordController.text);
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()));
-                        } on FirebaseAuthException catch (e) {
-                          //when the exception is caught the loading variable is set to false and the CircularProgressIndicator is hidden
-                          setState(() {
-                            loading = false;
-                          });
-                          if (e.code == 'weak-password') {
-                            Utils.scaffoldMessengerSnackBar(_formKey.currentState!.context, 'Password is too weak');
-                          } else if (e.code == 'email-already-in-use') {
-                            Utils.scaffoldMessengerSnackBar(_formKey.currentState!.context, 'Email already in use');
-                          } else if (e.code == 'network-request-failed') {
-                            Utils.scaffoldMessengerSnackBar(_formKey.currentState!.context, 'There was a networl error');
-                          } else {
-                            Utils.scaffoldMessengerSnackBar(_formKey.currentState!.context, 'Something went wrong');
+    return ValueListenableBuilder(
+      valueListenable: Hive.box('savedDarkTheme').listenable(),
+      builder: ((context, Box box, child) {
+        var darkMode = box.get('darkMode', defaultValue: false);
+        return Scaffold(
+          backgroundColor: darkMode ? const Color(0xff0B0B0B) : Colors.white,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(top: 86.h, left: 24.w, right: 24.w),
+              child: Form(
+                key: _formKey,
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/one_wallet_logo.svg',
+                        width: 56.w,
+                        height: 56.h,
+                      ),
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      Text(
+                        'Create account',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'SF-Pro',
+                          fontSize: 24.sp,
+                          color: darkMode ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 6.h),
+                      Text(
+                        'Sign up with the provided \nmeans to continue',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          height: 1.6,
+                          fontFamily: 'SF-Pro',
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          color: darkMode
+                              ? const Color(0xffDDDDDD)
+                              : const Color(0xff505780),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 56.h,
+                      ),
+                      TextFormField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter email';
                           }
-                        }
-                      }
-                    },
-                    color: const Color(0xff02003D),
-                    minWidth: double.infinity,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24.r),
-                    ),
-                    padding:  EdgeInsets.symmetric(vertical: 18.h),
-                    child: loading
-                        ? SizedBox(
-                            height: 11.h,
-                            width: 11.h,
-                            child:const  CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            ))
-                        : Text(
-                            'Create account',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'SF-Pro',
+                          if (!value.contains('@')) {
+                            return 'Please enter valid email';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            filled: true,
+                            hintText: 'Email Address',
+                            hintStyle: TextStyle(
+                                color: darkMode
+                                    ? const Color(0xffDDDDDD)
+                                    : const Color(0xffAAA8BD),
+                                fontSize: 14.sp,
+                                fontFamily: 'SF-Pro',
+                                fontWeight: FontWeight.w400),
+                            floatingLabelStyle:
+                                const TextStyle(color: Color(0xff02003D)),
+                            fillColor: darkMode
+                                ? const Color(0xff111111)
+                                : const Color(0xffFAFBFF),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(16.r))),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      TextFormField(
+                        controller: _passwordController,
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter password';
+                          }
+                          return null;
+                        },
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                              child: Icon(
+                                _obscureText ? Iconsax.eye_slash : Iconsax.eye,
+                                size: 16.sp,
+                                color: darkMode
+                                    ? const Color(0xffDDDDDD)
+                                    : const Color(0xff292D32),
+                              ),
                             ),
-                          ),
-                  ),
-                 SizedBox(
-                    height: 32.h,
-                  ),
-                  RichText(
-                      text: TextSpan(
-                          text: 'Already a User? ',
-                          style:  TextStyle(
-                            color:const Color(0xffAAA8BD),
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          children: [
-                        TextSpan(
-                            text: 'Log in to your account',
-                            style:  TextStyle(
-                              color:const Color(0xff5F00F8),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
+                            filled: true,
+                            hintText: 'Enter Password',
+                            hintStyle: TextStyle(
+                                color: darkMode
+                                    ? const Color(0xffDDDDDD)
+                                    : const Color(0xffAAA8BD),
+                                fontSize: 14.sp,
+                                fontFamily: 'SF-Pro',
+                                fontWeight: FontWeight.w400),
+                            floatingLabelStyle:
+                                const TextStyle(color: Color(0xff02003D)),
+                            fillColor: darkMode ? const Color(0xff111111) : const Color(0xffFAFBFF),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(16))),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      TextFormField(
+                        controller: _confirmPasswordController,
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please confirm your password';
+                          }
+                          if (value != _passwordController.text) {
+                            return 'Passwords do not match';
+                          }
+                          return null;
+                        },
+                        obscureText: _obscureConfirmPasswordText,
+                        decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _obscureConfirmPasswordText =
+                                      !_obscureConfirmPasswordText;
+                                });
+                              },
+                              child: Icon(
+                                  _obscureConfirmPasswordText
+                                      ? Iconsax.eye_slash
+                                      : Iconsax.eye,
+                                  size: 16.sp,
+                                  color: darkMode ? const Color(0xffDDDDDD) : const Color(0xff292D32)),
                             ),
-                            //this takes the user to the login screen when the text is clicked
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.of(context).push(
+                            filled: true,
+                            hintText: 'Confirm Password',
+                            hintStyle: TextStyle(
+                                color: darkMode ? const Color(0xffDDDDDD) : const Color(0xffAAA8BD),
+                                fontSize: 14.sp,
+                                fontFamily: 'SF-Pro',
+                                fontWeight: FontWeight.w400),
+                            floatingLabelStyle:
+                                const TextStyle(color: Color(0xff02003D)),
+                            fillColor: darkMode ? const Color(0xff111111) : const Color(0xffFAFBFF),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(16))),
+                      ),
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      MaterialButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            try {
+                              //when this button is pressed the loading variable is set to true and the CircularProgressIndicator is shown
+                              setState(() {
+                                loading = true;
+                              });
+                              await FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                                      email: _emailController.text,
+                                      password: _passwordController.text);
+
+                              Navigator.push(
+                                  context,
                                   MaterialPageRoute(
-                                      builder: (builder) =>
-                                          const LoginScreen()),
-                                );
-                              })
-                      ]))
-                ],
+                                      builder: (context) =>
+                                          const LoginScreen()));
+                            } on FirebaseAuthException catch (e) {
+                              //when the exception is caught the loading variable is set to false and the CircularProgressIndicator is hidden
+                              setState(() {
+                                loading = false;
+                              });
+                              if (e.code == 'weak-password') {
+                                Utils.scaffoldMessengerSnackBar(
+                                    _formKey.currentState!.context,
+                                    'Password is too weak');
+                              } else if (e.code == 'email-already-in-use') {
+                                Utils.scaffoldMessengerSnackBar(
+                                    _formKey.currentState!.context,
+                                    'Email already in use');
+                              } else if (e.code == 'network-request-failed') {
+                                Utils.scaffoldMessengerSnackBar(
+                                    _formKey.currentState!.context,
+                                    'There was a network error');
+                              } else {
+                                Utils.scaffoldMessengerSnackBar(
+                                    _formKey.currentState!.context,
+                                    'Something went wrong');
+                              }
+                            }
+                          }
+                        },
+                        color: darkMode ? const Color(0xff4E09FF) :const Color(0xff02003D),
+                        minWidth: double.infinity,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24.r),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 18.h),
+                        child: loading
+                            ? SizedBox(
+                                height: 11.h,
+                                width: 11.h,
+                                child: const CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ))
+                            : Text(
+                                'Create account',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'SF-Pro',
+                                ),
+                              ),
+                      ),
+                      SizedBox(
+                        height: 32.h,
+                      ),
+                      RichText(
+                          text: TextSpan(
+                              text: 'Already a User? ',
+                              style: TextStyle(
+                                color: darkMode ? const Color(0xffDDDDDD) : const Color(0xffAAA8BD),
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              children: [
+                            TextSpan(
+                                text: 'Log in to your account',
+                                style: TextStyle(
+                                  color: darkMode ? const Color(0xff6D13FF) : const Color(0xff5F00F8),
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                //this takes the user to the login screen when the text is clicked
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (builder) =>
+                                              const LoginScreen()),
+                                    );
+                                  })
+                          ]))
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

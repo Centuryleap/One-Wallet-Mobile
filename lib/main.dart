@@ -16,12 +16,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark,
-      statusBarColor: Colors.transparent, // transparent status bar
-    ),
-  );
+
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -54,9 +49,25 @@ class MyApp extends StatelessWidget {
                 builder: (context, Box box, widget) {
                   var darkMode = box.get('darkMode', defaultValue: false);
                   return MaterialApp(
+                      builder: (context, child) =>
+                          AnnotatedRegion<SystemUiOverlayStyle>(
+                            child: child!,
+                            value:  SystemUiOverlayStyle(
+                              systemNavigationBarColor: Colors.transparent,
+                              systemNavigationBarDividerColor:
+                                  Colors.transparent,
+                              systemNavigationBarIconBrightness:
+                                  Brightness.light,
+                              systemNavigationBarContrastEnforced: false,
+                              systemStatusBarContrastEnforced: false,
+                              statusBarIconBrightness: darkMode ? Brightness.light : Brightness.dark,
+                              statusBarColor: Colors.transparent,
+                              statusBarBrightness: Brightness.dark,
+                            ),
+                          ),
                       debugShowCheckedModeBanner: false,
                       title: 'Flutter Demo',
-                      themeMode: darkMode ? ThemeMode.light : ThemeMode.light,
+                      themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
                       theme: AppTheme.lightTheme(),
                       darkTheme: AppTheme.darkTheme(),
                       home: const SplashScreen());

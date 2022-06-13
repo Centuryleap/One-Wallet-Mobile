@@ -9,6 +9,7 @@ import 'package:one_wallet/app/utils/utils.dart';
 import 'package:one_wallet/views/HomeSection/bottom_navigation.dart';
 import 'package:one_wallet/views/OnboardingProcess/sign_up_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:one_wallet/views/ProfileSection/update_username.dart';
 
 import 'sign_up_screen.dart';
@@ -38,254 +39,274 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(top: 86.h, left: 24.w, right: 24.w),
-          child: Form(
-            key: formKey,
-            child: Container(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgPicture.asset(
-                    'assets/one_wallet_logo.svg',
-                    width: 56.w,
-                    height: 56.h,
-                  ),
-                  SizedBox(
-                    height: 40.h,
-                  ),
-                  Text(
-                    'Welcome!',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'SF-Pro',
-                        fontSize: 24.sp,
-                        color: Colors.black),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text(
-                    'Hey there, enter your\ndetails to continue',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      height: 1.6,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'SF-Pro',
-                      color: const Color(0xff505780),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 56.h,
-                  ),
-                  TextFormField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter email';
-                      }
-                      if (!value.contains('@')) {
-                        return 'Please enter valid email';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                        filled: true,
-                        hintText: 'Email Address',
-                        hintStyle: TextStyle(
-                            color: const Color(0xffAAA8BD),
-                            fontSize: 14.sp,
-                            fontFamily: 'SF-Pro',
-                            fontWeight: FontWeight.w400),
-                        floatingLabelStyle:
-                            const TextStyle(color: Color(0xff02003D)),
-                        fillColor: const Color(0xffFAFBFF),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(16.r))),
-                  ),
-                  SizedBox(
-                    height: 20.sp,
-                  ),
-                  TextFormField(
-                    controller: _passwordController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter password';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.text,
-                    obscureText: _obscureText,
-                    decoration: InputDecoration(
-                        suffixIcon: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                            child: Icon(
-                                _obscureText ? Iconsax.eye_slash : Iconsax.eye,
-                                size: 16.sp)),
-                        filled: true,
-                        hintText: 'Enter password',
-                        hintStyle: TextStyle(
-                            color: const Color(0xffAAA8BD),
-                            fontSize: 14.sp,
-                            fontFamily: 'SF-Pro',
-                            fontWeight: FontWeight.w400),
-                        floatingLabelStyle:
-                            const TextStyle(color: Color(0xff02003D)),
-                        fillColor: const Color(0xffFAFBFF),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(16.r))),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+    return ValueListenableBuilder(
+      valueListenable: Hive.box('savedDarkTheme').listenable(),
+      builder: ((context, Box box, child) {
+        var darkMode = box.get('darkMode', defaultValue: false);
+        return Scaffold(
+          backgroundColor: darkMode ? const Color(0xff0B0B0B) : Colors.white,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(top: 86.h, left: 24.w, right: 24.w),
+              child: Form(
+                key: formKey,
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      GestureDetector(
-                        onTap: () => _showSheet(context),
-                        child: Text(
-                          'Forgot password',
-                          style: TextStyle(
-                            color: const Color(0xff5F00F8),
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
+                      SvgPicture.asset(
+                        'assets/one_wallet_logo.svg',
+                        width: 56.w,
+                        height: 56.h,
+                      ),
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      Text(
+                        'Welcome!',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'SF-Pro',
+                            fontSize: 24.sp,
+                            color: darkMode ? Colors.white : Colors.black),
+                      ),
+                      SizedBox(
+                        height: 6.h,
+                      ),
+                      Text(
+                        'Hey there, enter your\ndetails to continue',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          height: 1.6,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'SF-Pro',
+                          color: darkMode
+                              ? const Color(0xffDDDDDD)
+                              : const Color(0xff505780),
                         ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20.sp,
-                  ),
-                  MaterialButton(
-                    onPressed: () async {
-                      //this conditonal checks if the form is valid for submission or not and only then does it try to login the user
-                      if (formKey.currentState!.validate()) {
-                        try {
-                          //when this button is pressed the loading variable is set to true and the CircularProgressIndicator is shown
-                          setState(() {
-                            loading = true;
-                          });
-                          await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: _emailController.text,
-                                  password: _passwordController.text);
-                          User? user = FirebaseAuth.instance.currentUser;
-                          if (user != null) {
-                            if (user.displayName != null) {
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const BottomNavigationScreen(),
-                                ),
-                                (Route<dynamic> route) => false,
-                              );
-                            } else {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const UpdateUsernameScreen(),
-                                ),
-                              );
+                      ),
+                      SizedBox(
+                        height: 56.h,
+                      ),
+                      TextFormField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter email';
+                          }
+                          if (!value.contains('@')) {
+                            return 'Please enter valid email';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            filled: true,
+                            hintText: 'Email Address',
+                            hintStyle: TextStyle(
+                                color: darkMode
+                                    ? const Color(0xffDDDDDD)
+                                    : const Color(0xffAAA8BD),
+                                fontSize: 14.sp,
+                                fontFamily: 'SF-Pro',
+                                fontWeight: FontWeight.w400),
+                            floatingLabelStyle:
+                                const TextStyle(color: Color(0xff02003D)),
+                            fillColor: darkMode
+                                ? const Color(0xff111111)
+                                : const Color(0xffFAFBFF),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(16.r))),
+                      ),
+                      SizedBox(
+                        height: 20.sp,
+                      ),
+                      TextFormField(
+                        controller: _passwordController,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter password';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.text,
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                              child: Icon(
+                                _obscureText ? Iconsax.eye_slash : Iconsax.eye,
+                                size: 16.sp,
+                                color: darkMode
+                                    ? const Color(0xffDDDDDD)
+                                    : const Color(0xff292D32),
+                              ),
+                            ),
+                            filled: true,
+                            hintText: 'Enter password',
+                            hintStyle: TextStyle(
+                                color: darkMode ? const Color(0xffDDDDDD) :  const Color(0xffAAA8BD),
+                                fontSize: 14.sp,
+                                fontFamily: 'SF-Pro',
+                                fontWeight: FontWeight.w400),
+                            floatingLabelStyle:
+                                const TextStyle(color: Color(0xff02003D)),
+                            fillColor: darkMode ? const Color(0xff111111) : const Color(0xffFAFBFF),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(16.r))),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () => _showSheet(context),
+                            child: Text(
+                              'Forgot password',
+                              style: TextStyle(
+                                color: darkMode ? const Color(0xff6D13FF) : const Color(0xff5F00F8),
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20.sp,
+                      ),
+                      MaterialButton(
+                        onPressed: () async {
+                          //this conditonal checks if the form is valid for submission or not and only then does it try to login the user
+                          if (formKey.currentState!.validate()) {
+                            try {
+                              //when this button is pressed the loading variable is set to true and the CircularProgressIndicator is shown
+                              setState(() {
+                                loading = true;
+                              });
+                              await FirebaseAuth.instance
+                                  .signInWithEmailAndPassword(
+                                      email: _emailController.text,
+                                      password: _passwordController.text);
+                              User? user = FirebaseAuth.instance.currentUser;
+                              if (user != null) {
+                                if (user.displayName != null) {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const BottomNavigationScreen(),
+                                    ),
+                                    (Route<dynamic> route) => false,
+                                  );
+                                } else {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const UpdateUsernameScreen(),
+                                    ),
+                                  );
+                                }
+                              }
+                            } on FirebaseAuthException catch (e) {
+                              //when the exception is caught the loading variable is set to false and the CircularProgressIndicator is hidden
+                              setState(() {
+                                loading = false;
+                              });
+                              if (e.code == 'invalid-email') {
+                                Utils.scaffoldMessengerSnackBar(
+                                    formKey.currentState!.context,
+                                    'Invalid Email');
+                              } else if (e.code == 'user-disabled') {
+                                Utils.scaffoldMessengerSnackBar(
+                                    formKey.currentState!.context,
+                                    'User Disabled');
+                              } else if (e.code == 'wrong-password') {
+                                Utils.scaffoldMessengerSnackBar(
+                                    formKey.currentState!.context,
+                                    'Wrong Password Entered');
+                              } else if (e.code == 'user-not-found') {
+                                Utils.scaffoldMessengerSnackBar(
+                                    formKey.currentState!.context,
+                                    'User not found');
+                              } else {
+                                Utils.scaffoldMessengerSnackBar(
+                                    formKey.currentState!.context,
+                                    'User Disabled');
+                              }
                             }
                           }
-                        } on FirebaseAuthException catch (e) {
-                          //when the exception is caught the loading variable is set to false and the CircularProgressIndicator is hidden
-                          setState(() {
-                            loading = false;
-                          });
-                          if (e.code == 'invalid-email') {
-                            Utils.scaffoldMessengerSnackBar(
-                                formKey.currentState!.context, 'Invalid Email');
-                          } else if (e.code == 'user-disabled') {
-                            Utils.scaffoldMessengerSnackBar(
-                                formKey.currentState!.context, 'User Disabled');
-                          } else if (e.code == 'wrong-password') {
-                            Utils.scaffoldMessengerSnackBar(
-                                formKey.currentState!.context,
-                                'Wrong Password Entered');
-                          } else if (e.code == 'user-not-found') {
-                            Utils.scaffoldMessengerSnackBar(
-                                formKey.currentState!.context,
-                                'User not found');
-                          } else {
-                            Utils.scaffoldMessengerSnackBar(
-                                formKey.currentState!.context, 'User Disabled');
-                          }
-                        }
-                      }
-                    },
-                    color: const Color(0xff02003D),
-                    minWidth: double.infinity,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24.r),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 18.h),
-                    child: loading
-                        ? SizedBox(
-                            height: 11.h,
-                            width: 11.w,
-                            child: const CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            ))
-                        : Text(
-                            'Login',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500),
-                          ),
-                  ),
-                  SizedBox(
-                    height: 38.h,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      text: 'New to Onewallet? ',
-                      style: TextStyle(
-                        color: const Color(0xffAAA8BD),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
+                        },
+                        color: darkMode ? const Color(0xff4E09FF) : const Color(0xff02003D),
+                        minWidth: double.infinity,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24.r),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 18.h),
+                        child: loading
+                            ? SizedBox(
+                                height: 11.h,
+                                width: 11.w,
+                                child: const CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ))
+                            : Text(
+                                'Login',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500),
+                              ),
                       ),
-                      children: [
-                        TextSpan(
-                            text: 'Create account',
-                            style: TextStyle(
-                              color: const Color(0xff5F00F8),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (builder) =>
-                                          const SignUpScreen()),
-                                );
-                              }),
-                      ],
-                    ),
+                      SizedBox(
+                        height: 38.h,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: 'New to Onewallet? ',
+                          style: TextStyle(
+                            color: darkMode ? const Color(0xffDDDDDD) : const Color(0xffAAA8BD),
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          children: [
+                            TextSpan(
+                                text: 'Create account',
+                                style: TextStyle(
+                                  color: darkMode ? const Color(0xff6D13FF) : const Color(0xff5F00F8),
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (builder) =>
+                                              const SignUpScreen()),
+                                    );
+                                  }),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
@@ -296,122 +317,128 @@ class _LoginScreenState extends State<LoginScreen> {
       maxHeight: 0.5,
       context: context,
       builder: (context, controller, offset) {
-        return Material(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(32.r),
-            topRight: Radius.circular(32.r),
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFFFFF),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(32.r),
-                topRight: Radius.circular(32.r),
+        return ValueListenableBuilder(
+            valueListenable: Hive.box('savedDarkTheme').listenable(),
+      builder: ((context, Box box, child) {
+        var darkMode = box.get('darkMode', defaultValue: false);
+          return Material(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(32.r),
+              topRight: Radius.circular(32.r),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color:  darkMode ? const Color(0xff111111) : const Color(0xFFFFFFFF),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(32.r),
+                  topRight: Radius.circular(32.r),
+                ),
+              ),
+              child: ListView(
+                controller: controller,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 32.h,
+                        ),
+                        SvgPicture.asset('assets/Rectangle.svg'),
+                        SizedBox(
+                          height: 32.h,
+                        ),
+                        Text(
+                          'Forgot password',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: darkMode ? Colors.white : const Color(0xff0B0B0B),
+                            fontSize: 24.sp,
+                          ),
+                        ),
+                        SizedBox(height: 6.h),
+                        Text(
+                          'Enter email attached to your account',
+                          style: TextStyle(
+                              color: darkMode ? const Color(0xffDDDDDD) :  const Color(0xff505780),
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Gotham',
+                              fontSize: 14.sp),
+                        ),
+                        SizedBox( 
+                          height: 40.h,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                          child: TextField(
+                            controller: _forgotPasswordEmailController,
+                            autofocus: true,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                                filled: true,
+                                labelText: 'Email Address',
+                                labelStyle: TextStyle(
+                                  color:darkMode ? const Color(0xffDDDDDD) : const Color(0xffAAA8BD),
+                                  fontSize: 14.sp,
+                                ),
+                                floatingLabelStyle:
+                                    const TextStyle(color: Color(0xff02003D)),
+                                fillColor: darkMode ? const Color(0xff111111) : const Color(0xffFAFBFF),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(16.r))),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 48.h,
+                        ),
+                        MaterialButton(
+                          onPressed: () async {
+                            if (_forgotPasswordEmailController.text.isEmpty) {
+                              Fluttertoast.showToast(
+                                msg: 'There is no email entered',
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                              );
+                            } else {
+                              try {
+                                await FirebaseAuth.instance
+                                    .sendPasswordResetEmail(
+                                        email:
+                                            _forgotPasswordEmailController.text);
+                                Navigator.of(context).pop();
+                                Utils.scaffoldMessengerSnackBar(
+                                    formKey.currentState!.context, 'Email Sent');
+                              } on FirebaseAuthException catch (e) {
+                                Utils.scaffoldMessengerSnackBar(
+                                    formKey.currentState!.context, e.code);
+                              }
+                            }
+                          },
+                          color: darkMode ? const Color(0xff4E09FF) :const Color(0xff02003D),
+                          minWidth: double.infinity,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24.r),
+                          ),
+                          padding: EdgeInsets.symmetric(vertical: 20.h),
+                          child: Text(
+                            'Continue',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-            child: ListView(
-              controller: controller,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 32.h,
-                      ),
-                      SvgPicture.asset('assets/Rectangle.svg'),
-                      SizedBox(
-                        height: 32.h,
-                      ),
-                      Text(
-                        'Forgot password',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xff0B0B0B),
-                          fontSize: 24.sp,
-                        ),
-                      ),
-                      SizedBox(height: 6.h),
-                      Text(
-                        'Enter email attached to your account',
-                        style: TextStyle(
-                            color: const Color(0xff505780),
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Gotham',
-                            fontSize: 14.sp),
-                      ),
-                      SizedBox(
-                        height: 40.h,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: TextField(
-                          controller: _forgotPasswordEmailController,
-                          autofocus: true,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                              filled: true,
-                              labelText: 'Email Address',
-                              labelStyle: TextStyle(
-                                color: const Color(0xffAAA8BD),
-                                fontSize: 14.sp,
-                              ),
-                              floatingLabelStyle:
-                                  const TextStyle(color: Color(0xff02003D)),
-                              fillColor: const Color(0xffFAFBFF),
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(16.r))),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 48.h,
-                      ),
-                      MaterialButton(
-                        onPressed: () async {
-                          if (_forgotPasswordEmailController.text.isEmpty) {
-                            Fluttertoast.showToast(
-                              msg: 'There is no email entered',
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                            );
-                          } else {
-                            try {
-                              await FirebaseAuth.instance
-                                  .sendPasswordResetEmail(
-                                      email:
-                                          _forgotPasswordEmailController.text);
-                              Navigator.of(context).pop();
-                              Utils.scaffoldMessengerSnackBar(
-                                  formKey.currentState!.context, 'Email Sent');
-                            } on FirebaseAuthException catch (e) {
-                              Utils.scaffoldMessengerSnackBar(
-                                  formKey.currentState!.context, e.code);
-                            }
-                          }
-                        },
-                        color: const Color(0xff02003D),
-                        minWidth: double.infinity,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24.r),
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 20.h),
-                        child: Text(
-                          'Continue',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          );
+      }),
         );
       },
     );

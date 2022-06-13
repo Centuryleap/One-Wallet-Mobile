@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +47,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: ((context, Box box, child) {
         var darkMode = box.get('darkMode', defaultValue: false);
         return Scaffold(
-          backgroundColor: const Color(0xffFAFAFA),
+          backgroundColor:
+              darkMode ? const Color(0xff0B0B0B) : const Color(0xffFAFAFA),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
@@ -63,7 +63,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           fontFamily: 'SF-Pro',
                           fontSize: 32.sp,
                           fontWeight: FontWeight.w500,
-                          color: const Color(0xff02003D)),
+                          color: darkMode
+                              ? const Color(0xffFFFFFF)
+                              : const Color(0xff02003D)),
                     ),
                     SizedBox(height: 54.h),
                     Text(
@@ -71,7 +73,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       style: TextStyle(
                         fontFamily: 'SF-Pro',
                         fontSize: 20.sp,
-                        color: const Color(0xff505780),
+                        color: darkMode
+                            ? const Color(0xffB5B3C5)
+                            : const Color(0xff505780),
                       ),
                     ),
                     SizedBox(height: 24.h),
@@ -80,7 +84,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             horizontal: 16.w, vertical: 16.h),
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: const Color(0xff02003D),
+                          color: darkMode
+                              ? const Color(0xff24017D)
+                              : const Color(0xff02003D),
                           borderRadius: BorderRadius.circular(32.r),
                         ),
                         child: ListTile(
@@ -98,7 +104,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               fontFamily: 'SF-Pro',
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white,
+                              color: darkMode
+                                  ? const Color(0xffDDDDDD)
+                                  : Colors.white,
                             ),
                           ),
                           subtitle: Text(
@@ -109,7 +117,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 fontFamily: 'SF-Pro',
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
-                                color: const Color(0xffAAA8BD),
+                                color: darkMode
+                                    ? const Color(0xffB5B3C5)
+                                    : const Color(0xffAAA8BD),
                               )),
                         )),
                     SizedBox(height: 30.h),
@@ -118,7 +128,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       style: TextStyle(
                         fontFamily: 'SF-Pro',
                         fontSize: 20.sp,
-                        color: const Color(0xff505780),
+                        color: darkMode
+                            ? const Color(0xffB5B3C5)
+                            : const Color(0xff505780),
                       ),
                     ),
                     SizedBox(height: 24.h),
@@ -133,11 +145,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         contentPadding: EdgeInsets.zero,
                         leading: CircleAvatar(
                           radius: 24.r,
-                          backgroundColor: Colors.white,
+                          backgroundColor:
+                              darkMode ? const Color(0xff111111) : Colors.white,
                           child: Icon(
                             Iconsax.key,
                             size: 16.sp,
-                            color: const Color(0xffAAA8BD),
+                            color: darkMode
+                                ? const Color(0xffB5B3C5)
+                                : const Color(0xffAAA8BD),
                           ),
                         ),
                         title: Text(
@@ -145,18 +160,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 13.sp,
-                            color: const Color(0xff0B0B0B),
+                            color: darkMode
+                                ? Colors.white
+                                : const Color(0xff0B0B0B),
                           ),
                         ),
                         trailing: Container(
                           width: 40.w,
                           height: 40.h,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: darkMode
+                                ? const Color(0xff0B0B0B)
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(12.r),
                           ),
-                          child: const Icon(CupertinoIcons.right_chevron,
-                              color: Color(0xffAAA8BD)),
+                          child: Icon(CupertinoIcons.right_chevron,
+                              color: darkMode
+                                  ? const Color(0xffB5B3C5)
+                                  : const Color(0xffAAA8BD)),
                         ),
                       ),
                     ),
@@ -168,13 +189,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         SharedPreferences prefs = await _prefs;
                         setState(() {
                           _toggled = value;
-          
+
                           prefs.setBool('fingerprintAllowed', _toggled);
                         });
                       },
                       secondary: CircleAvatar(
                         radius: 24.r,
-                        backgroundColor: Colors.white,
+                        backgroundColor:
+                            darkMode ? const Color(0xff111111) : Colors.white,
                         child: SvgPicture.asset(
                           'assets/fingerprint_tiny_svg.svg',
                           width: 16.w,
@@ -186,10 +208,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 13.sp,
-                          color: const Color(0xff0B0B0B),
+                          color:
+                              darkMode ? Colors.white : const Color(0xff0B0B0B),
                         ),
                       ),
-                      activeColor: const Color(0xff02003D),
+                      activeColor: darkMode
+                          ? const Color(0xff4E09FF)
+                          : const Color(0xff02003D),
                     ),
                     SizedBox(height: 15.h),
                     SwitchListTile(
@@ -200,7 +225,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                       secondary: CircleAvatar(
                         radius: 24.r,
-                        backgroundColor: Colors.white,
+                        backgroundColor:
+                            darkMode ? const Color(0xff111111) : Colors.white,
                         child: SvgPicture.asset(
                           'assets/dark-mode.svg',
                           width: 16.w,
@@ -212,10 +238,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 13.sp,
-                          color: const Color(0xff0B0B0B),
+                          color:
+                              darkMode ? Colors.white : const Color(0xff0B0B0B),
                         ),
                       ),
-                      activeColor: const Color(0xff02003D),
+                      activeColor: darkMode
+                          ? const Color(0xff4E09FF)
+                          : const Color(0xff02003D),
                     ),
                     SizedBox(height: 15.h),
                     GestureDetector(
@@ -224,7 +253,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         contentPadding: EdgeInsets.zero,
                         leading: CircleAvatar(
                             radius: 24.r,
-                            backgroundColor: Colors.white,
+                            backgroundColor: darkMode
+                                ? const Color(0xff111111)
+                                : Colors.white,
                             child: Icon(
                               Iconsax.import,
                               size: 16.sp,
@@ -235,14 +266,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 13.sp,
-                            color: const Color(0xff0B0B0B),
+                            color: darkMode
+                                ? Colors.white
+                                : const Color(0xff0B0B0B),
                           ),
                         ),
                         trailing: Container(
                           width: 40.w,
                           height: 40.h,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: darkMode
+                                ? const Color(0xff0B0B0B)
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: const Icon(CupertinoIcons.right_chevron,
@@ -257,7 +292,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         contentPadding: EdgeInsets.zero,
                         leading: CircleAvatar(
                             radius: 24.r,
-                            backgroundColor: Colors.white,
+                            backgroundColor: darkMode
+                                ? const Color(0xff111111)
+                                : Colors.white,
                             child: Icon(
                               Iconsax.export,
                               size: 16.sp,
@@ -268,14 +305,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 13.sp,
-                            color: const Color(0xff0B0B0B),
+                            color: darkMode
+                                ? Colors.white
+                                : const Color(0xff0B0B0B),
                           ),
                         ),
                         trailing: Container(
                           width: 40.w,
                           height: 40.h,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: darkMode
+                                ? const Color(0xff0B0B0B)
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: const Icon(CupertinoIcons.right_chevron,
@@ -290,18 +331,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         contentPadding: EdgeInsets.zero,
                         leading: CircleAvatar(
                             radius: 24.r,
-                            backgroundColor: Colors.white,
+                            backgroundColor: darkMode ? const Color(0xff111111) : Colors.white,
                             child: Icon(
                               Iconsax.logout,
                               size: 16.sp,
-                              color: const Color(0xffFF0000),
+                              color: darkMode ? const Color(0xffB5B3C5) : const Color(0xffFF0000),
                             )),
                         title: Text(
                           'Logout',
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 13.sp,
-                            color: const Color(0xff0B0B0B),
+                            color: darkMode ? Colors.white : const Color(0xff0B0B0B),
                           ),
                         ),
                       ),

@@ -51,7 +51,7 @@ class DummyCardWidget extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 40.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

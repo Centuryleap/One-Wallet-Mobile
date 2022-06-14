@@ -364,6 +364,9 @@ class _EditCardScreenState extends State<EditCardScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                       ),
+                      SizedBox(
+                        height: 20.h,
+                      )
                     ],
                   ),
                 ),

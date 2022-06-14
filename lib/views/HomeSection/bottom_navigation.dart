@@ -137,7 +137,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                 ),
               ],
               currentIndex: _selectedIndex,
-              selectedItemColor: darkMode ? const Color(0xffFFFFFF) : const Color(0xff02003D),
+              selectedItemColor:
+                  darkMode ? const Color(0xffFFFFFF) : const Color(0xff02003D),
               unselectedItemColor: const Color(0xffAAA8BD),
               onTap: _onItemTapped,
             ),

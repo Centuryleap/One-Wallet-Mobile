@@ -88,7 +88,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 36.h,
+                        height: 66.h,
                       ),
                       Row(
                         children: [

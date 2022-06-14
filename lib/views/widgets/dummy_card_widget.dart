@@ -35,7 +35,7 @@ class DummyCardWidget extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 40.h),
+                   SizedBox(height: 40.h),
                   //create text widget with cardModel.cardNumber and seperate it by 4 digits with space in between
                   Text(
                     cardModel.cardNumber.substring(0, 4) +
@@ -66,7 +66,7 @@ class DummyCardWidget extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
-                          SizedBox(height: 6.h),
+                         SizedBox(height: 6.h),
                           Text(
                             cardModel.cardHolderName,
                             style: GoogleFonts.sourceSansPro(

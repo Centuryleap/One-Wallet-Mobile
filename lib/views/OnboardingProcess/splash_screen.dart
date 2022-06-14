@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     height: 48.h,
                   )
                 : SvgPicture.asset(
-                    'assets/onboarding_screen_svg_black.svg',
+                    'assets/onboarding_screen_svg_white.svg',
                     width: 223.w,
                     height: 48.h,
                   ),

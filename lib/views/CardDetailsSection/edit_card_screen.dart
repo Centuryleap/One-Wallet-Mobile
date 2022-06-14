@@ -88,7 +88,7 @@ class _EditCardScreenState extends State<EditCardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 36.h,
+                        height: 66.h,
                       ),
                       Row(
                         children: [
@@ -364,9 +364,6 @@ class _EditCardScreenState extends State<EditCardScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                       ),
-                      SizedBox(
-                        height: 20.h,
-                      )
                     ],
                   ),
                 ),

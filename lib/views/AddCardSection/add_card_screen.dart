@@ -73,7 +73,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 36.h,
+                        height: 66.h,
                       ),
                       Row(
                         children: [
@@ -148,7 +148,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         autovalidateMode: _submitted
                             ? AutovalidateMode.onUserInteraction
                             : AutovalidateMode.disabled,
-                        inputFormatters: [LengthLimitingTextInputFormatter(20)],
+                        inputFormatters: [LengthLimitingTextInputFormatter(15)],
                         decoration: InputDecoration(
                             filled: true,
                             hintText: 'Card Holder name',
@@ -350,7 +350,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                       ),
-                      SizedBox(height: 20.h)
                     ],
                   ),
                 ),
@@ -371,14 +370,10 @@ class _AddCardScreenState extends State<AddCardScreen> {
               builder: ((context, Box box, child) {
                 var darkMode = box.get('darkMode', defaultValue: false);
                 return AlertDialog(
-                  backgroundColor: darkMode
-                      ? const Color(0xff111111)
-                      : const Color(0xffFFFFFF),
+                  backgroundColor: darkMode ? const Color(0xff111111) : const Color(0xffFFFFFF) ,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32),
-                    side: BorderSide(
-                      color: darkMode ? const Color(0xff252525) : Colors.white,
-                    ),
+                    side: BorderSide(color: darkMode ? const Color(0xff252525) : Colors.white, ),
                   ),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -401,16 +396,14 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       const SizedBox(
                         height: 4,
                       ),
-                      Text(
+                       Text(
                         'You have successfully added\n a card to your wallet',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'SF-Pro',
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: darkMode
-                              ? const Color(0xffB5B3C5)
-                              : const Color(0xffAAA8BD),
+                          color: darkMode ? const Color(0xffB5B3C5) : const Color(0xffAAA8BD),
                         ),
                       ),
                       const SizedBox(
@@ -420,9 +413,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        color: darkMode
-                            ? const Color(0xff4E09FF)
-                            : const Color(0xff02003D),
+                        color: darkMode ? const Color(0xff4E09FF) :const Color(0xff02003D),
                         padding: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 62),
                         shape: RoundedRectangleBorder(

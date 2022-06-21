@@ -108,15 +108,23 @@ class _AddCardScreenState extends State<AddCardScreen> {
                       DummyCardWidget(
                         cardModel: CardData(
                             id: 1,
-                            cardNumber: 'XXXXXXXXXXXXXXXX',
-                            bankName: '----',
-                            cardHolderName: '----',
-                            expiryDate: '----',
-                            cvvCode: '---',
+                            cardNumber: cardNumber,
+                            bankName: bankName.isEmpty ? '----' : bankName,
+                            cardHolderName: cardHolderName.isEmpty
+                                ? '----'
+                                : cardHolderName,
+                            expiryDate:
+                                expiryDate.isEmpty ? '----' : expiryDate,
+                            cvvCode: cvvCode.isEmpty ? '---' : cvvCode,
                             cardType: 'master'),
                       ),
                       SizedBox(height: 36.h),
                       TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            bankName = value;
+                          });
+                        },
                         controller: bankNameController,
                         keyboardType: TextInputType.text,
                         autovalidateMode: _submitted
@@ -143,12 +151,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         height: 16.h,
                       ),
                       TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            cardHolderName = value;
+                          });
+                        },
                         controller: cardHolderNameController,
                         keyboardType: TextInputType.text,
                         autovalidateMode: _submitted
                             ? AutovalidateMode.onUserInteraction
                             : AutovalidateMode.disabled,
-                        inputFormatters: [LengthLimitingTextInputFormatter(15)],
+                        inputFormatters: [LengthLimitingTextInputFormatter(25)],
                         decoration: InputDecoration(
                             filled: true,
                             hintText: 'Card Holder name',
@@ -169,6 +182,11 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         height: 16.h,
                       ),
                       TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            cardNumber = value;
+                          });
+                        },
                         keyboardType: TextInputType.number,
                         controller: cardNumberController,
                         autovalidateMode: _submitted
@@ -204,6 +222,11 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         height: 16.h,
                       ),
                       TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            cvvCode = value;
+                          });
+                        },
                         keyboardType: TextInputType.number,
                         controller: cvvController,
                         autovalidateMode: _submitted
@@ -239,6 +262,11 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         height: 16.h,
                       ),
                       TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            expiryDate = value;
+                          });
+                        },
                         keyboardType: TextInputType.number,
                         controller: expiryDateController,
                         autovalidateMode: _submitted

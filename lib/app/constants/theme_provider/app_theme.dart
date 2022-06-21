@@ -17,7 +17,6 @@ class AppTheme {
         onSurface: Color(0XFF000000),
       ),
       scaffoldBackgroundColor: const Color(0XFFFFFFFF),
-      useMaterial3: true,
       brightness: Brightness.light);
 
   static ThemeData darkTheme() => ThemeData(
@@ -36,6 +35,5 @@ class AppTheme {
         onSurface: Color(0XFFFFFFFF),
       ),
       scaffoldBackgroundColor: const Color(0XFF0B0B0B),
-      useMaterial3: true,
       brightness: Brightness.dark);
 }

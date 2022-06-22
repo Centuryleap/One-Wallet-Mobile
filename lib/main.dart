@@ -21,6 +21,11 @@ void main() async {
   runApp(const MyApp());
 }
 
+//  bankNameController.text.isNotEmpty
+//                               ? widget.cardModel.bankName
+//                               : bankNameOnChanged
+//                                   ? bankName
+//                                   : widget.cardModel.bankName,
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -52,7 +57,7 @@ class MyApp extends StatelessWidget {
                       builder: (context, child) =>
                           AnnotatedRegion<SystemUiOverlayStyle>(
                             child: child!,
-                            value:  SystemUiOverlayStyle(
+                            value: SystemUiOverlayStyle(
                               systemNavigationBarColor: Colors.transparent,
                               systemNavigationBarDividerColor:
                                   Colors.transparent,
@@ -60,7 +65,8 @@ class MyApp extends StatelessWidget {
                                   Brightness.light,
                               systemNavigationBarContrastEnforced: false,
                               systemStatusBarContrastEnforced: false,
-                              statusBarIconBrightness: darkMode ? Brightness.light : Brightness.dark,
+                              statusBarIconBrightness:
+                                  darkMode ? Brightness.light : Brightness.dark,
                               statusBarColor: Colors.transparent,
                               statusBarBrightness: Brightness.dark,
                             ),

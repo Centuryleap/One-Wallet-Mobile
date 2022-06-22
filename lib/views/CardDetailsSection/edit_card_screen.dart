@@ -37,6 +37,12 @@ class _EditCardScreenState extends State<EditCardScreen> {
   String cvvCode = '';
   String cardType = 'master';
 
+  bool onBankNameChanged = false;
+  bool onCardNumberChanged = false;
+  bool onExpiryDateChanged = false;
+  bool onCardHolderNameChanged = false;
+  bool onCvvCodeChanged = false;
+
   //use this to keep track of when the form is submitted
   bool _submitted = false;
 
@@ -122,15 +128,31 @@ class _EditCardScreenState extends State<EditCardScreen> {
                       DummyCardWidget(
                         cardModel: CardData(
                           id: 1,
-                          cardNumber: widget.cardModel.cardNumber,
-                          bankName: widget.cardModel.bankName,
-                          cardHolderName: widget.cardModel.cardHolderName,
-                          expiryDate: widget.cardModel.expiryDate,
-                          cvvCode: widget.cardModel.cvvCode,
+                          cardNumber: onCardNumberChanged
+                              ? cardNumber
+                              : widget.cardModel.cardNumber,
+                          bankName: onBankNameChanged
+                              ? bankName
+                              : widget.cardModel.bankName,
+                          cardHolderName: onCardHolderNameChanged
+                              ? cardHolderName
+                              : widget.cardModel.cardHolderName,
+                          expiryDate: onExpiryDateChanged
+                              ? expiryDate
+                              : widget.cardModel.expiryDate,
+                          cvvCode: onCvvCodeChanged
+                              ? cvvCode
+                              : widget.cardModel.cvvCode,
                         ),
                       ),
                       SizedBox(height: 36.h),
                       TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            onBankNameChanged = true;
+                            bankName = value;
+                          });
+                        },
                         //initialValue: widget.cardModel.bankName,
                         controller: bankNameController,
                         keyboardType: TextInputType.text,
@@ -158,6 +180,12 @@ class _EditCardScreenState extends State<EditCardScreen> {
                         height: 16.h,
                       ),
                       TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            onCardHolderNameChanged = true;
+                            cardHolderName = value;
+                          });
+                        },
                         controller: cardHolderNameController,
                         keyboardType: TextInputType.text,
                         autovalidateMode: _submitted
@@ -184,6 +212,12 @@ class _EditCardScreenState extends State<EditCardScreen> {
                         height: 16.h,
                       ),
                       TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            onCardNumberChanged = true;
+                            cardNumber = value;
+                          });
+                        },
                         keyboardType: TextInputType.number,
                         controller: cardNumberController,
                         autovalidateMode: _submitted
@@ -219,6 +253,12 @@ class _EditCardScreenState extends State<EditCardScreen> {
                         height: 16.h,
                       ),
                       TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            onCvvCodeChanged = true;
+                            cvvCode = value;
+                          });
+                        },
                         keyboardType: TextInputType.number,
                         controller: cvvController,
                         autovalidateMode: _submitted
@@ -254,6 +294,12 @@ class _EditCardScreenState extends State<EditCardScreen> {
                         height: 16.h,
                       ),
                       TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            onExpiryDateChanged = true;
+                            expiryDate = value;
+                          });
+                        },
                         keyboardType: TextInputType.number,
                         controller: expiryDateController,
                         autovalidateMode: _submitted

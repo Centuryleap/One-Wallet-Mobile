@@ -182,18 +182,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                     SizedBox(height: 15.h),
-                    SwitchListTile(
+                    ListTile(
                       contentPadding: EdgeInsets.zero,
-                      value: _toggled,
-                      onChanged: (value) async {
-                        SharedPreferences prefs = await _prefs;
-                        setState(() {
-                          _toggled = value;
-
-                          prefs.setBool('fingerprintAllowed', _toggled);
-                        });
-                      },
-                      secondary: CircleAvatar(
+                      leading: CircleAvatar(
                         radius: 24.r,
                         backgroundColor:
                             darkMode ? const Color(0xff111111) : Colors.white,
@@ -212,40 +203,88 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               darkMode ? Colors.white : const Color(0xff0B0B0B),
                         ),
                       ),
-                      activeColor: darkMode
-                          ? const Color(0xff4E09FF)
-                          : const Color(0xff02003D),
+                      trailing: Transform.scale(
+                        scale: 0.75,
+                        child: CupertinoSwitch(
+                          activeColor: darkMode
+                              ? const Color(0xff4E09FF)
+                              : const Color(0xff02003D),
+                          value: _toggled,
+                          onChanged: (value) async {
+                            SharedPreferences prefs = await _prefs;
+                            setState(() {
+                              _toggled = value;
+
+                              prefs.setBool('fingerprintAllowed', _toggled);
+                            });
+                          },
+                        ),
+                      ),
                     ),
                     SizedBox(height: 15.h),
-                    SwitchListTile(
-                      contentPadding: EdgeInsets.zero,
-                      value: darkMode,
-                      onChanged: (value) {
-                        box.put('darkMode', value);
-                      },
-                      secondary: CircleAvatar(
-                        radius: 24.r,
-                        backgroundColor:
-                            darkMode ? const Color(0xff111111) : Colors.white,
-                        child: SvgPicture.asset(
-                          'assets/dark-mode.svg',
-                          width: 16.w,
-                          height: 16.h,
+                    ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: CircleAvatar(
+                          radius: 24.r,
+                          backgroundColor:
+                              darkMode ? const Color(0xff111111) : Colors.white,
+                          child: SvgPicture.asset(
+                            'assets/dark-mode.svg',
+                            width: 16.w,
+                            height: 16.h,
+                          ),
                         ),
-                      ),
-                      title: Text(
-                        'Enable dark mode',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13.sp,
-                          color:
-                              darkMode ? Colors.white : const Color(0xff0B0B0B),
+                        title: Text(
+                          'Enable dark mode',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13.sp,
+                            color: darkMode
+                                ? Colors.white
+                                : const Color(0xff0B0B0B),
+                          ),
                         ),
-                      ),
-                      activeColor: darkMode
-                          ? const Color(0xff4E09FF)
-                          : const Color(0xff02003D),
-                    ),
+                        trailing: Transform.scale(
+                          scale: 0.75,
+                          child: CupertinoSwitch(
+                            activeColor: darkMode
+                                ? const Color(0xff4E09FF)
+                                : const Color(0xff02003D),
+                            value: darkMode,
+                            onChanged: (value) {
+                              box.put('darkMode', value);
+                            },
+                          ),
+                        )),
+                    // SwitchListTile(
+                    //   contentPadding: EdgeInsets.zero,
+                    //   value: darkMode,
+                    //   onChanged: (value) {
+                    //     box.put('darkMode', value);
+                    //   },
+                    //   secondary: CircleAvatar(
+                    //     radius: 24.r,
+                    //     backgroundColor:
+                    //         darkMode ? const Color(0xff111111) : Colors.white,
+                    //     child: SvgPicture.asset(
+                    //       'assets/dark-mode.svg',
+                    //       width: 16.w,
+                    //       height: 16.h,
+                    //     ),
+                    //   ),
+                    //   title: Text(
+                    //     'Enable dark mode',
+                    //     style: TextStyle(
+                    //       fontWeight: FontWeight.w400,
+                    //       fontSize: 13.sp,
+                    //       color:
+                    //           darkMode ? Colors.white : const Color(0xff0B0B0B),
+                    //     ),
+                    //   ),
+                    //   activeColor: darkMode
+                    //       ? const Color(0xff4E09FF)
+                    //       : const Color(0xff02003D),
+                    // ),
                     SizedBox(height: 15.h),
                     GestureDetector(
                       onTap: () => CsvLogic.loadCSV(context),
@@ -331,18 +370,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         contentPadding: EdgeInsets.zero,
                         leading: CircleAvatar(
                             radius: 24.r,
-                            backgroundColor: darkMode ? const Color(0xff111111) : Colors.white,
+                            backgroundColor: darkMode
+                                ? const Color(0xff111111)
+                                : Colors.white,
                             child: Icon(
                               Iconsax.logout,
                               size: 16.sp,
-                              color: darkMode ? const Color(0xffB5B3C5) : const Color(0xffFF0000),
+                              color: darkMode
+                                  ? const Color(0xffB5B3C5)
+                                  : const Color(0xffFF0000),
                             )),
                         title: Text(
                           'Logout',
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 13.sp,
-                            color: darkMode ? Colors.white : const Color(0xff0B0B0B),
+                            color: darkMode
+                                ? Colors.white
+                                : const Color(0xff0B0B0B),
                           ),
                         ),
                       ),

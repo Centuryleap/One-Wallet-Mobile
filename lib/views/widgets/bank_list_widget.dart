@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:one_wallet/views/CardDetailsSection/card_detail.dart';
 import 'package:one_wallet/app/database/database.dart';
 import 'package:one_wallet/views/widgets/bank_tile_widget.dart';
@@ -43,44 +45,52 @@ class _BankListWidgetState extends State<BankListWidget> {
   @override
   Widget build(BuildContext context) {
 //i surrounded this listview by flexible instead of sizedbox for some weird reason the compiler gave me, so i had to use the flexbit.loose propperty
-    return Flexible(
-      fit: FlexFit.loose,
-      child: ListView.separated(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: ((context, index) {
-            return GestureDetector(
-                onTap: () => fingerprintActivated
-                    ? _authenticate(context, index)
-                    : Navigator.of(context).push(
-                        PageTransition(
-                          child: CardDetails(
-                            cardModel: widget.cardList[index],
+    return ValueListenableBuilder(
+      valueListenable: Hive.box('savedDarkTheme').listenable(),
+      builder: ((context, Box box, child){
+        bool fingerprintAllowed = box.get('fingerprint',defaultValue: false);
+        return Flexible(
+          fit: FlexFit.loose,
+          child: ListView.separated(
+              shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: ((context, index) {
+                return GestureDetector(
+                    onTap: () => fingerprintAllowed
+                        ? _authenticate(context, index)
+                        : Navigator.of(context).push(
+                            PageTransition(
+                              child: CardDetails(
+                                cardModel: widget.cardList[index],
+                              ),
+                              type: PageTransitionType.rightToLeft,
+                              duration: const Duration(
+                                milliseconds: 500,
+                              ),
+                            ),
                           ),
-                          type: PageTransitionType.rightToLeft,
-                          duration: const Duration(
-                            milliseconds: 500,
-                          ),
+                    child: AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 100),
+                      child: SlideAnimation(
+                        duration: const Duration(milliseconds: 2500),
+                        curve: Curves.fastLinearToSlowEaseIn,
+                        horizontalOffset: -350,
+                        verticalOffset: -10,
+                        child: BankTile(
+                          cardModel: widget.cardList[index],
                         ),
                       ),
-                child: AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 100),
-                  child: SlideAnimation(
-                    duration: const Duration(milliseconds: 2500),
-                    curve: Curves.fastLinearToSlowEaseIn,
-                    horizontalOffset: -350,
-                    verticalOffset: -10,
-                    child: BankTile(
-                      cardModel: widget.cardList[index],
-                    ),
-                  ),
-                ));
-          }),
-          separatorBuilder: (context, _) {
-            return  SizedBox(height: 8.h);
-          },
-          itemCount: widget.cardList.length),
+                    ));
+              }),
+              separatorBuilder: (context, _) {
+                return  SizedBox(height: 8.h);
+              },
+              itemCount: widget.cardList.length),
+        );
+      }) 
+        
+      
     );
   }
 

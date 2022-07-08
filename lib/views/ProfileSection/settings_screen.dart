@@ -46,6 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       valueListenable: Hive.box('savedDarkTheme').listenable(),
       builder: ((context, Box box, child) {
         var darkMode = box.get('darkMode', defaultValue: false);
+        var fingerprintAllowed = box.get('fingerprint',defaultValue: false);
         return Scaffold(
           backgroundColor:
               darkMode ? const Color(0xff0B0B0B) : const Color(0xffFAFAFA),
@@ -209,12 +210,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           activeColor: darkMode
                               ? const Color(0xff4E09FF)
                               : const Color(0xff02003D),
-                          value: _toggled,
+                          value: fingerprintAllowed,
                           onChanged: (value) async {
                             SharedPreferences prefs = await _prefs;
                             setState(() {
                               _toggled = value;
-
+                                box.put('fingerprint', value);
                               prefs.setBool('fingerprintAllowed', _toggled);
                             });
                           },
@@ -256,35 +257,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             },
                           ),
                         )),
-                    // SwitchListTile(
-                    //   contentPadding: EdgeInsets.zero,
-                    //   value: darkMode,
-                    //   onChanged: (value) {
-                    //     box.put('darkMode', value);
-                    //   },
-                    //   secondary: CircleAvatar(
-                    //     radius: 24.r,
-                    //     backgroundColor:
-                    //         darkMode ? const Color(0xff111111) : Colors.white,
-                    //     child: SvgPicture.asset(
-                    //       'assets/dark-mode.svg',
-                    //       width: 16.w,
-                    //       height: 16.h,
-                    //     ),
-                    //   ),
-                    //   title: Text(
-                    //     'Enable dark mode',
-                    //     style: TextStyle(
-                    //       fontWeight: FontWeight.w400,
-                    //       fontSize: 13.sp,
-                    //       color:
-                    //           darkMode ? Colors.white : const Color(0xff0B0B0B),
-                    //     ),
-                    //   ),
-                    //   activeColor: darkMode
-                    //       ? const Color(0xff4E09FF)
-                    //       : const Color(0xff02003D),
-                    // ),
                     SizedBox(height: 15.h),
                     GestureDetector(
                       onTap: () => CsvLogic.loadCSV(context),
